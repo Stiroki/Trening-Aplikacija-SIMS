@@ -1,6 +1,6 @@
 using System;
 
-namespace DefaultNamespace;
+namespace TreningAplikacija.Models;
 
 public class TrainingItem
 {

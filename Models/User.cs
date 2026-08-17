@@ -1,11 +1,11 @@
 using System;
 
-namespace DefaultNamespace;
+namespace TreningAplikacija.Models;
 
-public abstract class User
+public abstract class User : IIdentifiable
 {
-    public Guid Id { get; set; } = Guid.newGuid();
-    public string Name {get; set;};
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public string Name {get; set;}
     public string LastName {get; set;}
     public string Email {get; set;}
     public string Password {get; set;}

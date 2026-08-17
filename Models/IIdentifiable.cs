@@ -1,5 +1,5 @@
 using System;
-namespace DefaultNamespace;
+namespace TreningAplikacija.Models;
 
 public interface IIdentifiable
 {
