@@ -1,68 +1,42 @@
 using Avalonia.Controls;
-using Avalonia.Interactivity;
-using System;
 using TreningAplikacija.Models;
-using TreningAplikacija.Services;
+using TreningAplikacija.ViewModels;
 
 namespace TreningAplikacija.Views
 {
     public partial class LoginWindow : Window
     {
-        private readonly AuthService _authService;
-
         public LoginWindow()
         {
             InitializeComponent();
-            _authService = new AuthService(); 
+
+            var viewModel = new LogInViewModel();
+            viewModel.LoginSucceeded += OnLoginSucceeded;
+            viewModel.RegisterRequested += OnRegisterRequested;
+
+            DataContext = viewModel;
         }
 
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        private void OnLoginSucceeded(User user)
         {
-            string email = EmailTextBox.Text?.Trim() ?? string.Empty;
-            string password = PasswordTextBox.Text ?? string.Empty;
-
-            ErrorTextBlock.IsVisible = false;
-
-            try
+            if (user is Client)
             {
-                var loggedInUser = _authService.Login(email, password);
-
-                if (loggedInUser != null)
-                {
-                    if (loggedInUser is Client)
-                    {
-                        //var clientWindow = new ClientWindow();
-                        //clientWindow.Show();
-                    }
-                    else if (loggedInUser is Trainer)
-                    {
-                        //var trainerWindow = new TrainerWindow();
-                        //trainerWindow.Show();
-                    }
-                    
-                    this.Close(); 
-                }
-                else
-                {
-                    ShowError("Pogrešan email ili lozinka!");
-                }
+                //var clientWindow = new ClientWindow();
+                //clientWindow.Show();
             }
-            catch (Exception ex)
+            else if (user is Trainer)
             {
-                ShowError(ex.Message);
+                //var trainerWindow = new TrainerWindow();
+                //trainerWindow.Show();
             }
+
+            Close();
         }
 
-        private void RegisterButton_Click(object sender, RoutedEventArgs e)
+        private void OnRegisterRequested()
         {
             //var registerWindow = new RegisterWindow();
             //registerWindow.Show();
-        }
-
-        private void ShowError(string message)
-        {
-            ErrorTextBlock.Text = message;
-            ErrorTextBlock.IsVisible = true;
         }
     }
 }
