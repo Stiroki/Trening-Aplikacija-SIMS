@@ -9,7 +9,7 @@ public enum RequestStatus
     Rejected
 }
 
-public class TrainingRequest : IIdentifiable
+public class TrainerRequest : IIdentifiable
 {
     public Guid Id { get; set; } = Guid.NewGuid();
     public Guid ClientId { get; set; }
