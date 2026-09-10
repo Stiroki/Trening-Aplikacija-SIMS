@@ -1,3 +1,4 @@
+using System;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -18,6 +19,8 @@ public partial class AdminViewModel : ViewModelBase
 
     public ObservableCollection<Trainer> PendingTrainers { get; } = new();
     public ObservableCollection<Client> PendingClients { get; } = new();
+    public ObservableCollection<Payment> OverduePayments { get; } = new();
+    public ObservableCollection<Payment> CommissionPayments { get; } = new();
 
     public AdminViewModel(Admin admin) : this(admin, new AdminService())
     {
@@ -30,6 +33,8 @@ public partial class AdminViewModel : ViewModelBase
 
         LoadPendingTrainers();
         LoadPendingClients();
+        LoadOverduePayments();
+        LoadCommissionPayments();
     }
 
     private void LoadPendingTrainers()
@@ -49,6 +54,26 @@ public partial class AdminViewModel : ViewModelBase
             PendingClients.Add(client);
         }
     }
+
+    private void LoadOverduePayments()
+    {
+        OverduePayments.Clear();
+        foreach (var payment in _adminService.GetOverduePayments())
+        {
+            OverduePayments.Add(payment);
+        }
+    }
+
+    private void LoadCommissionPayments()
+    {
+        CommissionPayments.Clear();
+        foreach (var payment in _adminService.GetCommissionPayments())
+        {
+            CommissionPayments.Add(payment);
+        }
+    }
+
+    public string GetTrainerName(Guid trainerId) => _adminService.GetTrainerName(trainerId);
 
     [RelayCommand]
     private void ApproveTrainer(Trainer trainer)
@@ -88,5 +113,16 @@ public partial class AdminViewModel : ViewModelBase
         _adminService.RejectClient(client.Id, string.Empty);
         PendingClients.Remove(client);
         StatusMessage = $"{client.Name} {client.LastName} je odbijen.";
+    }
+
+    [RelayCommand]
+    private void MarkPaymentAsPaid(Payment payment)
+    {
+        if (payment == null) return;
+
+        _adminService.MarkPaymentAsPaid(payment.Id);
+        OverduePayments.Remove(payment);
+        CommissionPayments.Remove(payment);
+        StatusMessage = $"Uplata za period {payment.Period} označena kao plaćena.";
     }
 }

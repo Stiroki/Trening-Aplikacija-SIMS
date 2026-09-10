@@ -9,6 +9,12 @@ public enum PaymentStatus
     Overdue
 }
 
+public enum PaymentType
+{
+    ClientToTrainer,
+    TrainerCommission
+}
+
 public class Payment : IIdentifiable
 {
     public Guid Id { get; set; } = Guid.NewGuid();
@@ -19,4 +25,5 @@ public class Payment : IIdentifiable
     public DateTime? PaidDate { get; set; }
     public PaymentStatus Status { get; set; } = PaymentStatus.Pending;
     public string Period { get; set; } = string.Empty;
+    public PaymentType Type { get; set; } = PaymentType.ClientToTrainer;
 }
