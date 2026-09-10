@@ -69,9 +69,16 @@ namespace TreningAplikacija.Services
 
             var client = _clientRepo.GetAll()
                 .FirstOrDefault(c => c.Email.Equals(email, StringComparison.OrdinalIgnoreCase) && c.Password == password);
-            
-            if (client != null) 
+
+            if (client != null)
+            {
+                if (!client.IsVerifiedByAdmin)
+                {
+                    throw new Exception("Account pending admin verification.");
+                }
+
                 return client;
+            }
 
             var trainer = _trainerRepo.GetAll()
                 .FirstOrDefault(t => t.Email.Equals(email, StringComparison.OrdinalIgnoreCase) && t.Password == password);

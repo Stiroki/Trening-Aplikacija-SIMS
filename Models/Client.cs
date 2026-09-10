@@ -12,4 +12,6 @@ public class Client : User
     public string LocationPreference { get; set; } = string.Empty;
     public int TrainingsPerWeek { get; set; }
     public List<Guid> OwnedEquipmentIds { get; set; } = new List<Guid>();
+    
+    public bool IsVerifiedByAdmin { get; set; } = false;
 }
