@@ -1,0 +1,12 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:TreningAplikacija.ViewModels"
+        x:Class="TreningAplikacija.Views.AdminWindow"
+        x:DataType="vm:AdminViewModel"
+        x:CompileBindings="False"
+        Title="Admin"
+        Width="800" Height="600">
+    <StackPanel Margin="20">
+        <TextBlock Text="{Binding WelcomeMessage}" FontSize="20" />
+    </StackPanel>
+</Window>
