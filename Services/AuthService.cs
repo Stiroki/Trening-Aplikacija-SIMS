@@ -9,11 +9,24 @@ namespace TreningAplikacija.Services
     {
         private readonly JsonRepository<Client> _clientRepo;
         private readonly JsonRepository<Trainer> _trainerRepo;
+        private readonly JsonRepository<Admin> _adminRepo;
 
         public AuthService()
         {
             _clientRepo = new JsonRepository<Client>("clients.json");
             _trainerRepo = new JsonRepository<Trainer>("trainers.json");
+            _adminRepo = new JsonRepository<Admin>("admins.json");
+
+            if (!_adminRepo.GetAll().Any())
+            {
+                _adminRepo.Create(new Admin
+                {
+                    Name = "Admin",
+                    LastName = "Admin",
+                    Email = "admin@trening.com",
+                    Password = "admin123"
+                });
+            }
         }
 
         public bool IsEmailTaken(string email)
@@ -48,6 +61,12 @@ namespace TreningAplikacija.Services
 
         public User? Login(string email, string password)
         {
+            var admin = _adminRepo.GetAll()
+                .FirstOrDefault(a => a.Email.Equals(email, StringComparison.OrdinalIgnoreCase) && a.Password == password);
+
+            if (admin != null)
+                return admin;
+
             var client = _clientRepo.GetAll()
                 .FirstOrDefault(c => c.Email.Equals(email, StringComparison.OrdinalIgnoreCase) && c.Password == password);
             

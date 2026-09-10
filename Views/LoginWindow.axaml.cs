@@ -19,9 +19,14 @@ namespace TreningAplikacija.Views
 
         private void OnLoginSucceeded(User user)
         {
-            if (user is Client client)
+            if (user is Admin admin)
             {
-                ClientMainWindow clientWindow = new ClientMainWindow(client);
+                var adminWindow = new AdminWindow(admin);
+                adminWindow.Show();
+            }
+            else if (user is Client client)
+            {
+                var clientWindow = new ClientMainWindow(client);
                 clientWindow.Show();
             }
             else if (user is Trainer)
