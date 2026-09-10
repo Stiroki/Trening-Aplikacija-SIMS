@@ -16,4 +16,10 @@
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
     </PackageReference>
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\AdminWIndow.axaml.cs">
+      <DependentUpon>AdminWindow.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>
