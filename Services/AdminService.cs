@@ -10,11 +10,20 @@ namespace TreningAplikacija.Services
     {
         private readonly JsonRepository<Trainer> _trainerRepo;
         private readonly JsonRepository<Review> _reviewRepo;
+        private readonly NotificationService _notificationService;
 
         public AdminService()
         {
             _trainerRepo = new JsonRepository<Trainer>("trainers.json");
             _reviewRepo = new JsonRepository<Review>("reviews.json");
+            _notificationService = new NotificationService();
+        }
+
+        public List<Trainer> GetPendingTrainerRegistrations()
+        {
+            return _trainerRepo.GetAll()
+                .Where(t => !t.IsVerifiedByAdmin)
+                .ToList();
         }
 
         public void VerifyTrainer(Guid trainerId)
@@ -24,11 +33,30 @@ namespace TreningAplikacija.Services
 
             trainer.IsVerifiedByAdmin = true;
             _trainerRepo.Update(trainer);
+
+            _notificationService.CreateNotification(
+                trainer.Id,
+                NotificationType.RequestAccepted,
+                "Vaša prijava je odobrena. Dobrodošli na platformu.");
+        }
+
+        public void RejectTrainer(Guid trainerId, string reason)
+        {
+            var trainer = _trainerRepo.GetById(trainerId);
+            if (trainer == null) throw new Exception("Trainer not found.");
+
+            _notificationService.CreateNotification(
+                trainer.Id,
+                NotificationType.RequestRejected,
+                string.IsNullOrWhiteSpace(reason)
+                    ? "Vaša prijava je odbijena."
+                    : $"Vaša prijava je odbijena. Razlog: {reason}");
+
+            _trainerRepo.Delete(trainerId);
         }
 
         public void RemoveTrainer(Guid trainerId)
         {
-            // treba dodati brisanje i treninga od trenera i vezbi itd
             _trainerRepo.Delete(trainerId);
         }
         
