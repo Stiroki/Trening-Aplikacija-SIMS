@@ -21,5 +21,8 @@
     <Compile Update="Views\AdminWIndow.axaml.cs">
       <DependentUpon>AdminWindow.axaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\ClientMainWindow.axaml.cs">
+      <DependentUpon>ClientMainWindow.axaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>
