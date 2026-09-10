@@ -9,12 +9,14 @@ namespace TreningAplikacija.Services
     public class AdminService
     {
         private readonly JsonRepository<Trainer> _trainerRepo;
+        private readonly JsonRepository<Client> _clientRepo;
         private readonly JsonRepository<Review> _reviewRepo;
         private readonly NotificationService _notificationService;
 
         public AdminService()
         {
             _trainerRepo = new JsonRepository<Trainer>("trainers.json");
+            _clientRepo = new JsonRepository<Client>("clients.json");
             _reviewRepo = new JsonRepository<Review>("reviews.json");
             _notificationService = new NotificationService();
         }
@@ -57,9 +59,46 @@ namespace TreningAplikacija.Services
 
         public void RemoveTrainer(Guid trainerId)
         {
+            // treba dodati brisanje i treninga od trenera i vezbi itd
             _trainerRepo.Delete(trainerId);
         }
-        
+
+        public List<Client> GetPendingClientRegistrations()
+        {
+            return _clientRepo.GetAll()
+                .Where(c => !c.IsVerifiedByAdmin)
+                .ToList();
+        }
+
+        public void VerifyClient(Guid clientId)
+        {
+            var client = _clientRepo.GetById(clientId);
+            if (client == null) throw new Exception("Client not found.");
+
+            client.IsVerifiedByAdmin = true;
+            _clientRepo.Update(client);
+
+            _notificationService.CreateNotification(
+                client.Id,
+                NotificationType.RequestAccepted,
+                "Vaša registracija je odobrena. Dobrodošli na platformu.");
+        }
+
+        public void RejectClient(Guid clientId, string reason)
+        {
+            var client = _clientRepo.GetById(clientId);
+            if (client == null) throw new Exception("Client not found.");
+
+            _notificationService.CreateNotification(
+                client.Id,
+                NotificationType.RequestRejected,
+                string.IsNullOrWhiteSpace(reason)
+                    ? "Vaša registracija je odbijena."
+                    : $"Vaša registracija je odbijena. Razlog: {reason}");
+
+            _clientRepo.Delete(clientId);
+        }
+
         public List<Review> GetAllReviews()
         {
             return _reviewRepo.GetAll()

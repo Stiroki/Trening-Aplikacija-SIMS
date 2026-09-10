@@ -17,6 +17,7 @@ public partial class AdminViewModel : ViewModelBase
     private string _statusMessage = string.Empty;
 
     public ObservableCollection<Trainer> PendingTrainers { get; } = new();
+    public ObservableCollection<Client> PendingClients { get; } = new();
 
     public AdminViewModel(Admin admin) : this(admin, new AdminService())
     {
@@ -28,6 +29,7 @@ public partial class AdminViewModel : ViewModelBase
         _adminService = adminService;
 
         LoadPendingTrainers();
+        LoadPendingClients();
     }
 
     private void LoadPendingTrainers()
@@ -36,6 +38,15 @@ public partial class AdminViewModel : ViewModelBase
         foreach (var trainer in _adminService.GetPendingTrainerRegistrations())
         {
             PendingTrainers.Add(trainer);
+        }
+    }
+
+    private void LoadPendingClients()
+    {
+        PendingClients.Clear();
+        foreach (var client in _adminService.GetPendingClientRegistrations())
+        {
+            PendingClients.Add(client);
         }
     }
 
@@ -57,5 +68,25 @@ public partial class AdminViewModel : ViewModelBase
         _adminService.RejectTrainer(trainer.Id, string.Empty);
         PendingTrainers.Remove(trainer);
         StatusMessage = $"{trainer.Name} {trainer.LastName} je odbijen.";
+    }
+
+    [RelayCommand]
+    private void ApproveClient(Client client)
+    {
+        if (client == null) return;
+
+        _adminService.VerifyClient(client.Id);
+        PendingClients.Remove(client);
+        StatusMessage = $"{client.Name} {client.LastName} je odobren.";
+    }
+
+    [RelayCommand]
+    private void RejectClient(Client client)
+    {
+        if (client == null) return;
+
+        _adminService.RejectClient(client.Id, string.Empty);
+        PendingClients.Remove(client);
+        StatusMessage = $"{client.Name} {client.LastName} je odbijen.";
     }
 }
