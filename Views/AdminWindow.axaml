@@ -6,7 +6,37 @@
         x:CompileBindings="False"
         Title="Admin"
         Width="800" Height="600">
-    <StackPanel Margin="20">
-        <TextBlock Text="{Binding WelcomeMessage}" FontSize="20" />
+    <StackPanel Margin="20" Spacing="15">
+        <TextBlock Text="{Binding WelcomeMessage}" FontSize="20" FontWeight="Bold" />
+
+        <TextBlock Text="Prijave trenera na čekanju" FontSize="16" Margin="0,10,0,0" />
+
+        <ItemsControl ItemsSource="{Binding PendingTrainers}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="Gray" BorderThickness="1" Padding="10" Margin="0,0,0,8">
+                        <Grid ColumnDefinitions="*,Auto,Auto">
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="{Binding Name}" FontWeight="Bold" />
+                                <TextBlock Text="{Binding LastName}" />
+                                <TextBlock Text="{Binding Email}" Foreground="Gray" />
+                            </StackPanel>
+
+                            <Button Grid.Column="1" Content="Prihvati" Margin="10,0"
+                                    Command="{Binding DataContext.ApproveTrainerCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                    CommandParameter="{Binding}"
+                                    Background="Green" Foreground="White" />
+
+                            <Button Grid.Column="2" Content="Odbij"
+                                    Command="{Binding DataContext.RejectTrainerCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                    CommandParameter="{Binding}"
+                                    Background="Red" Foreground="White" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <TextBlock Text="{Binding StatusMessage}" Foreground="Blue" />
     </StackPanel>
 </Window>

@@ -1,15 +1,61 @@
+using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using TreningAplikacija.Models;
+using TreningAplikacija.Services;
 
 namespace TreningAplikacija.ViewModels;
 
 public partial class AdminViewModel : ViewModelBase
 {
+    private readonly AdminService _adminService;
+
     [ObservableProperty]
     private string _welcomeMessage;
 
-    public AdminViewModel(Admin admin)
+    [ObservableProperty]
+    private string _statusMessage = string.Empty;
+
+    public ObservableCollection<Trainer> PendingTrainers { get; } = new();
+
+    public AdminViewModel(Admin admin) : this(admin, new AdminService())
+    {
+    }
+
+    public AdminViewModel(Admin admin, AdminService adminService)
     {
         _welcomeMessage = $"Dobrodošli, {admin.Name}";
+        _adminService = adminService;
+
+        LoadPendingTrainers();
+    }
+
+    private void LoadPendingTrainers()
+    {
+        PendingTrainers.Clear();
+        foreach (var trainer in _adminService.GetPendingTrainerRegistrations())
+        {
+            PendingTrainers.Add(trainer);
+        }
+    }
+
+    [RelayCommand]
+    private void ApproveTrainer(Trainer trainer)
+    {
+        if (trainer == null) return;
+
+        _adminService.VerifyTrainer(trainer.Id);
+        PendingTrainers.Remove(trainer);
+        StatusMessage = $"{trainer.Name} {trainer.LastName} je odobren.";
+    }
+
+    [RelayCommand]
+    private void RejectTrainer(Trainer trainer)
+    {
+        if (trainer == null) return;
+
+        _adminService.RejectTrainer(trainer.Id, string.Empty);
+        PendingTrainers.Remove(trainer);
+        StatusMessage = $"{trainer.Name} {trainer.LastName} je odbijen.";
     }
 }
