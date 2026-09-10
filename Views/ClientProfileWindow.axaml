@@ -1,0 +1,67 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:TreningAplikacija.ViewModels"
+        x:Class="TreningAplikacija.Views.ClientProfileWindow"
+        x:DataType="vm:ClientProfileViewModel"
+        x:CompileBindings="False"
+        Title="Moj profil" Width="450" Height="750"
+        WindowStartupLocation="CenterScreen">
+
+    <ScrollViewer>
+        <StackPanel Margin="30" Spacing="10">
+
+            <TextBlock Text="Moj profil" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,15"/>
+
+            <TextBlock Text="Ime:" />
+            <TextBox Text="{Binding Name}" />
+
+            <TextBlock Text="Prezime:" />
+            <TextBox Text="{Binding LastName}" />
+
+            <TextBlock Text="Email:" />
+            <TextBox Text="{Binding Email}" />
+
+            <TextBlock Text="Pol:" />
+            <ComboBox SelectedItem="{Binding Gender}" HorizontalAlignment="Stretch">
+                <ComboBoxItem Content="muški" />
+                <ComboBoxItem Content="ženski" />
+            </ComboBox>
+
+            <TextBlock Text="Datum rođenja:" />
+            <DatePicker SelectedDate="{Binding DateOfBirth}" HorizontalAlignment="Stretch" />
+
+            <TextBlock Text="Visina (cm):" />
+            <TextBox Text="{Binding Height}" />
+
+            <TextBlock Text="Težina (kg):" />
+            <TextBox Text="{Binding Weight}" />
+
+            <TextBlock Text="Zdravstveni problemi:" />
+            <TextBox Text="{Binding HealthIssues}" AcceptsReturn="True" Height="60" />
+
+            <TextBlock Text="Ciljevi:" />
+            <TextBox Text="{Binding Goals}" AcceptsReturn="True" Height="60" />
+
+            <TextBlock Text="Preferenca mesta:" />
+            <ComboBox SelectedItem="{Binding LocationPreference}" HorizontalAlignment="Stretch">
+                <ComboBoxItem Content="teretana" />
+                <ComboBoxItem Content="kuca" />
+                <ComboBoxItem Content="napolju" />
+            </ComboBox>
+
+            <TextBlock Text="Broj treninga nedeljno:" />
+            <TextBox Text="{Binding TrainingsPerWeek}" />
+
+            <TextBlock Text="{Binding StatusMessage}" IsVisible="{Binding IsStatusVisible}"
+                       HorizontalAlignment="Center" Margin="0,10,0,0" FontWeight="Bold"/>
+
+            <Button Content="Sačuvaj izmene" Command="{Binding SaveCommand}"
+                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                    Background="#007ACC" Foreground="White" Padding="10" Margin="0,15,0,0"/>
+
+            <Button Content="Nazad" Command="{Binding BackCommand}"
+                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                    Background="Transparent"/>
+        </StackPanel>
+    </ScrollViewer>
+</Window>

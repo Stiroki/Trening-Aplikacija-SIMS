@@ -19,10 +19,10 @@ namespace TreningAplikacija.Views
 
         private void OnLoginSucceeded(User user)
         {
-            if (user is Client)
+            if (user is Client client)
             {
-                //var clientWindow = new ClientWindow();
-                //clientWindow.Show();
+                ClientMainWindow clientWindow = new ClientMainWindow(client);
+                clientWindow.Show();
             }
             else if (user is Trainer)
             {
@@ -35,8 +35,9 @@ namespace TreningAplikacija.Views
 
         private void OnRegisterRequested()
         {
-            //var registerWindow = new RegisterWindow();
-            //registerWindow.Show();
+            RegisterChoiceWindow registerWindow = new RegisterChoiceWindow();
+            registerWindow.Show();
+            Close();
         }
     }
 }

@@ -1,0 +1,27 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:TreningAplikacija.ViewModels"
+        x:Class="TreningAplikacija.Views.ClientMainWindow"
+        x:DataType="vm:ClientMainViewModel"
+        x:CompileBindings="False"
+        Title="Klijent - Glavni meni" Width="500" Height="500"
+        WindowStartupLocation="CenterScreen">
+
+    <StackPanel Margin="40" Spacing="20" VerticalAlignment="Center">
+
+        <TextBlock Text="{Binding WelcomeMessage}" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+        <Button Content="Moj profil" Command="{Binding OpenProfileCommand}"
+                HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Padding="12" FontSize="16"/>
+
+        <Button Content="Pregled trenera" Command="{Binding OpenTrainersCommand}"
+                HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Padding="12" FontSize="16"/>
+
+        <Button Content="Moji treninzi" Command="{Binding OpenMyTrainingsCommand}"
+                HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Padding="12" FontSize="16"/>
+
+        <Button Content="Odjava" Command="{Binding LogoutCommand}"
+                HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Padding="12" FontSize="16"
+                Background="#CC3333" Foreground="White" Margin="0,20,0,0"/>
+    </StackPanel>
+</Window>

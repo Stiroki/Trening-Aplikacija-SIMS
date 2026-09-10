@@ -1,0 +1,26 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:TreningAplikacija.ViewModels"
+        x:Class="TreningAplikacija.Views.RegisterChoiceWindow"
+        x:DataType="vm:RegisterChoiceViewModel"
+        x:CompileBindings="False"
+        Title="Registracija" Width="350" Height="300"
+        WindowStartupLocation="CenterScreen">
+
+    <StackPanel Margin="40" Spacing="15" VerticalAlignment="Center">
+
+        <TextBlock Text="Registrujte se kao:" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+        <Button Content="Klijent" Command="{Binding ChooseClientCommand}"
+                HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                Padding="12" FontSize="16" Background="#007ACC" Foreground="White"/>
+
+        <Button Content="Trener" Command="{Binding ChooseTrainerCommand}"
+                HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                Padding="12" FontSize="16" Background="#28A745" Foreground="White"/>
+
+        <Button Content="Nazad" Command="{Binding BackCommand}"
+                HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                Background="Transparent" Margin="0,10,0,0"/>
+    </StackPanel>
+</Window>
