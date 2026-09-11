@@ -33,12 +33,14 @@ public partial class ClientMainWindow : Window
 
     private void OnNavigateToTrainers()
     {
-        
+        TrainersListWindow trainersWindow = new TrainersListWindow(_viewModel.Client);
+        trainersWindow.Show();
     }
 
     private void OnNavigateToMyTrainings()
     {
-        
+        MyTrainingsWindow trainingsWindow = new MyTrainingsWindow(_viewModel.Client);
+        trainingsWindow.Show();
     }
 
     private void OnLogoutRequested()

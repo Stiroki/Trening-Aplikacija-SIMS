@@ -19,6 +19,7 @@ public partial class ClientProfileWindow : Window
         viewModel.BackRequested += OnBackRequested;
 
         DataContext = viewModel;
+        viewModel.LoadClientData();
     }
 
     private void OnBackRequested()

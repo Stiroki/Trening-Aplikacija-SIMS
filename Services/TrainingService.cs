@@ -69,5 +69,10 @@ namespace TreningAplikacija.Services
 
             _sessionRepo.Update(session);
         }
+
+        public Exercise? GetExerciseById(Guid exerciseId)
+        {
+            return _exerciseRepo.GetAll().FirstOrDefault(e => e.Id == exerciseId);
+        }
     }
 }

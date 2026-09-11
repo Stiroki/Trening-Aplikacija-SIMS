@@ -21,7 +21,7 @@ public partial class ClientProfileViewModel : ViewModelBase
     private string _email = string.Empty;
     
     [ObservableProperty] 
-    private DateTime? _dateOfBirth;
+    private DateTimeOffset? _dateOfBirth;
     
     [ObservableProperty] 
     private string _gender = string.Empty;
@@ -49,6 +49,9 @@ public partial class ClientProfileViewModel : ViewModelBase
     
     [ObservableProperty] 
     private bool _isStatusVisible;
+    
+    public string[] GenderOptions { get; } = { "Muški", "Ženski" };
+    public string[] LocationOptions { get; } = { "Teretana", "Kuća", "Napolje" };
 
     public event Action? BackRequested;
 
@@ -61,16 +64,15 @@ public partial class ClientProfileViewModel : ViewModelBase
     {
         _client = client;
         _clientService = clientService;
-        LoadClientData();
     }
 
-    private void LoadClientData()
+    public void LoadClientData()
     {
         Name = _client.Name;
         LastName = _client.LastName;
         Email = _client.Email;
         Gender = _client.Gender;
-        DateOfBirth = _client.DateOfBirth;
+        DateOfBirth = _client.DateOfBirth.HasValue ? new DateTimeOffset(_client.DateOfBirth.Value) : null;
         Height = _client.Height;
         Weight = _client.Weight;
         HealthIssues = _client.HealthIssues;
@@ -98,7 +100,7 @@ public partial class ClientProfileViewModel : ViewModelBase
         _client.LastName = LastName.Trim();
         _client.Email = Email.Trim();
         _client.Gender = Gender;
-        _client.DateOfBirth = DateOfBirth;
+        _client.DateOfBirth = DateOfBirth?.DateTime;
         _client.Height = Height;
         _client.Weight = Weight;
         _client.HealthIssues = HealthIssues;

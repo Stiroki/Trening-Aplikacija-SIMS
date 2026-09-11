@@ -28,10 +28,9 @@
             <TextBox Text="{Binding ConfirmPassword}" PasswordChar="*" PlaceholderText="Ponovite lozinku..." />
 
             <TextBlock Text="Pol:" />
-            <ComboBox SelectedItem="{Binding Gender}" HorizontalAlignment="Stretch">
-                <ComboBoxItem Content="muški" />
-                <ComboBoxItem Content="ženski" />
-            </ComboBox>
+            <ComboBox ItemsSource="{Binding GenderOptions}" 
+                      SelectedItem="{Binding Gender}" 
+                      HorizontalAlignment="Stretch"/>
 
             <TextBlock Text="Datum rođenja:" />
             <DatePicker SelectedDate="{Binding DateOfBirth}" HorizontalAlignment="Stretch" />

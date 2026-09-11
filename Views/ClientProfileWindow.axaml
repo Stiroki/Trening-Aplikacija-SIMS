@@ -21,11 +21,10 @@
             <TextBlock Text="Email:" />
             <TextBox Text="{Binding Email}" />
 
-            <TextBlock Text="Pol:" />
-            <ComboBox SelectedItem="{Binding Gender}" HorizontalAlignment="Stretch">
-                <ComboBoxItem Content="muški" />
-                <ComboBoxItem Content="ženski" />
-            </ComboBox>
+            <TextBlock Text="Pol:"/>
+            <ComboBox ItemsSource="{Binding GenderOptions}" 
+                      SelectedItem="{Binding Gender}" 
+                      HorizontalAlignment="Stretch"/>
 
             <TextBlock Text="Datum rođenja:" />
             <DatePicker SelectedDate="{Binding DateOfBirth}" HorizontalAlignment="Stretch" />
@@ -43,11 +42,9 @@
             <TextBox Text="{Binding Goals}" AcceptsReturn="True" Height="60" />
 
             <TextBlock Text="Preferenca mesta:" />
-            <ComboBox SelectedItem="{Binding LocationPreference}" HorizontalAlignment="Stretch">
-                <ComboBoxItem Content="teretana" />
-                <ComboBoxItem Content="kuca" />
-                <ComboBoxItem Content="napolju" />
-            </ComboBox>
+            <ComboBox ItemsSource="{Binding LocationOptions}" 
+                      SelectedItem="{Binding LocationPreference}" 
+                      HorizontalAlignment="Stretch"/>
 
             <TextBlock Text="Broj treninga nedeljno:" />
             <TextBox Text="{Binding TrainingsPerWeek}" />

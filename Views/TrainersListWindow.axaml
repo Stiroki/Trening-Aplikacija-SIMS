@@ -1,0 +1,62 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:TreningAplikacija.ViewModels"
+        x:Class="TreningAplikacija.Views.TrainersListWindow"
+        x:DataType="vm:TrainersListViewModel"
+        x:CompileBindings="False"
+        Title="Lista trenera" Width="600" Height="500"
+        WindowStartupLocation="CenterScreen">
+
+    <ScrollViewer>
+        <StackPanel Margin="20" Spacing="10">
+
+            <TextBlock Text="Dostupni treneri" FontSize="22" FontWeight="Bold"
+                       HorizontalAlignment="Center" Margin="0,0,0,15"/>
+
+            <ItemsControl ItemsSource="{Binding Trainers}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Gray" BorderThickness="1" Padding="12" Margin="0,0,0,8"
+                                CornerRadius="4">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <StackPanel Grid.Column="0" Spacing="3">
+                                    <TextBlock FontWeight="Bold">
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} {1}">
+                                                <Binding Path="Trainer.Name"/>
+                                                <Binding Path="Trainer.LastName"/>
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                    <TextBlock Text="{Binding Trainer.AverageRating, StringFormat='Ocena: {0:F1}'}"
+                                               Foreground="Gray"/>
+                                    <TextBlock Text="{Binding Trainer.MonthlyFee, StringFormat='Mesečno: {0} RSD'}"
+                                               Foreground="Gray"/>
+                                    <TextBlock Text="{Binding Trainer.FeePerSession, StringFormat='Po treningu: {0} RSD'}"
+                                               Foreground="Gray"/>
+                                    <TextBlock Text="{Binding RequestStatusText}"
+                                               Foreground="OrangeRed" FontStyle="Italic"
+                                               IsVisible="{Binding RequestStatusText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+                                </StackPanel>
+
+                                <Button Grid.Column="1" Content="Pošalji zahtev"
+                                        VerticalAlignment="Center"
+                                        IsEnabled="{Binding CanSendRequest}"
+                                        Command="{Binding DataContext.SendRequestCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                        CommandParameter="{Binding}"
+                                        Background="#007ACC" Foreground="White" Padding="10,6"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <TextBlock Text="{Binding StatusMessage}" IsVisible="{Binding IsStatusVisible}"
+                       HorizontalAlignment="Center" Margin="0,10,0,0" FontWeight="Bold"/>
+
+            <Button Content="Nazad" Command="{Binding BackCommand}"
+                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                    Background="Transparent" Margin="0,15,0,0"/>
+        </StackPanel>
+    </ScrollViewer>
+</Window>

@@ -26,7 +26,7 @@ public partial class RegisterClientViewModel : ViewModelBase
     private string _confirmPassword = string.Empty;
     
     [ObservableProperty] 
-    private DateTime? _dateOfBirth;
+    private DateTimeOffset? _dateOfBirth;
     
     [ObservableProperty] 
     private string _gender = string.Empty;
@@ -54,6 +54,9 @@ public partial class RegisterClientViewModel : ViewModelBase
     
     [ObservableProperty] 
     private bool _isErrorVisible;
+    
+    public string[] GenderOptions { get; } = { "Muški", "Ženski" };
+    public string[] LocationOptions { get; } = { "Teretana", "Kuća", "Napolje" };
 
     public event Action? RegistrationSucceeded;
     public event Action? BackToLoginRequested;
@@ -98,7 +101,7 @@ public partial class RegisterClientViewModel : ViewModelBase
                 LastName = LastName.Trim(),
                 Email = Email.Trim(),
                 Password = Password,
-                DateOfBirth = DateOfBirth,
+                DateOfBirth = DateOfBirth?.DateTime,
                 Gender = Gender,
                 Height = Height,
                 Weight = Weight,
