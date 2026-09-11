@@ -33,7 +33,7 @@ namespace TreningAplikacija.Services
         public void VerifyTrainer(Guid trainerId)
         {
             var trainer = _trainerRepo.GetById(trainerId);
-            if (trainer == null) throw new Exception("Trainer not found.");
+            if (trainer == null) throw new Exception("Trener nije pronadjen.");
 
             trainer.IsVerifiedByAdmin = true;
             _trainerRepo.Update(trainer);
@@ -47,7 +47,7 @@ namespace TreningAplikacija.Services
         public void RejectTrainer(Guid trainerId, string reason)
         {
             var trainer = _trainerRepo.GetById(trainerId);
-            if (trainer == null) throw new Exception("Trainer not found.");
+            if (trainer == null) throw new Exception("Trener nije pronadjen.");
 
             _notificationService.CreateNotification(
                 trainer.Id,
@@ -68,7 +68,7 @@ namespace TreningAplikacija.Services
         public void WarnTrainer(Guid trainerId, string reason)
         {
             var trainer = _trainerRepo.GetById(trainerId);
-            if (trainer == null) throw new Exception("Trainer not found.");
+            if (trainer == null) throw new Exception("Trener nije pronadjen.");
 
             trainer.WarningCount += 1;
             _trainerRepo.Update(trainer);
@@ -91,7 +91,7 @@ namespace TreningAplikacija.Services
         public void VerifyClient(Guid clientId)
         {
             var client = _clientRepo.GetById(clientId);
-            if (client == null) throw new Exception("Client not found.");
+            if (client == null) throw new Exception("Klijent nije pronadjen.");
 
             client.IsVerifiedByAdmin = true;
             _clientRepo.Update(client);
@@ -105,7 +105,7 @@ namespace TreningAplikacija.Services
         public void RejectClient(Guid clientId, string reason)
         {
             var client = _clientRepo.GetById(clientId);
-            if (client == null) throw new Exception("Client not found.");
+            if (client == null) throw new Exception("Klijent nije pronadjen.");
 
             _notificationService.CreateNotification(
                 client.Id,
@@ -179,7 +179,7 @@ namespace TreningAplikacija.Services
         public void MarkPaymentAsPaid(Guid paymentId)
         {
             var payment = _paymentRepo.GetById(paymentId);
-            if (payment == null) throw new Exception("Payment not found.");
+            if (payment == null) throw new Exception("Uplata nije pronadjena.");
 
             payment.Status = PaymentStatus.Paid;
             payment.PaidDate = DateTime.Now;
