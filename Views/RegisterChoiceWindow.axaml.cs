@@ -28,9 +28,9 @@ public partial class RegisterChoiceWindow : Window
     
     private void OnTrainerChosen()
     {
-        //RegisterTrainerWindow trainerWindow = new RegisterTrainerWindow();
-        //trainerWindow.Show();
-        //Close();
+        RegisterTrainerWindow trainerWindow = new RegisterTrainerWindow();
+        trainerWindow.Show();
+        Close();
     }
 
     private void OnBackRequested()

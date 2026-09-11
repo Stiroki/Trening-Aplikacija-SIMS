@@ -29,10 +29,10 @@ namespace TreningAplikacija.Views
                 var clientWindow = new ClientMainWindow(client);
                 clientWindow.Show();
             }
-            else if (user is Trainer)
+            else if (user is Trainer trainer)
             {
-                //var trainerWindow = new TrainerWindow();
-                //trainerWindow.Show();
+                var trainerWindow = new TrainerMainWindow(trainer);
+                trainerWindow.Show();
             }
 
             Close();

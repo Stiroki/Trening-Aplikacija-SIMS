@@ -1,0 +1,42 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:TreningAplikacija.ViewModels"
+        x:Class="TreningAplikacija.Views.RegisterTrainerWindow"
+        x:CompileBindings="False"
+        Title="Registracija trenera" Width="450" Height="580"
+        WindowStartupLocation="CenterScreen">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="25" Spacing="10">
+            <TextBlock Text="Registracija trenera" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center"/>
+
+            <TextBlock Text="Ime:"/>
+            <TextBox Text="{Binding Name}"/>
+
+            <TextBlock Text="Prezime:"/>
+            <TextBox Text="{Binding LastName}"/>
+
+            <TextBlock Text="Email:"/>
+            <TextBox Text="{Binding Email}"/>
+
+            <TextBlock Text="Lozinka:"/>
+            <TextBox Text="{Binding Password}" PasswordChar="*"/>
+
+            <TextBlock Text="Pol:"/>
+            <TextBox Text="{Binding Gender}"/>
+
+            <TextBlock Text="Mesečna cena članarine (RSD/EUR):"/>
+            <TextBox Text="{Binding MonthlyFee}"/>
+
+            <TextBlock Text="Cena po individualnom treningu:"/>
+            <TextBox Text="{Binding FeePerSession}"/>
+
+            <TextBlock Text="{Binding ErrorMessage}" Foreground="#d32f2f" TextWrapping="Wrap" Margin="0,5,0,0"/>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10" Margin="0,15,0,0">
+                <Button Content="Nazad" Click="OnBackClicked"/>
+                <Button Content="Registruj se" Background="#1565c0" Foreground="White" Click="OnRegisterClicked"/>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</Window>
