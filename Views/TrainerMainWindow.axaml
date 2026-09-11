@@ -1,0 +1,338 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:TreningAplikacija.ViewModels"
+        xmlns:models="using:TreningAplikacija.Models"
+        x:Class="TreningAplikacija.Views.TrainerMainWindow"
+        x:CompileBindings="False"
+        Title="Trener Panel" Width="1150" Height="750"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid RowDefinitions="Auto,*">
+        <!-- Top Bar -->
+        <Border Grid.Row="0" Background="#1e293b" Padding="15,10">
+            <Grid ColumnDefinitions="*,Auto,Auto">
+                <TextBlock Grid.Column="0" Text="Trening Aplikacija - Trener Panel" Foreground="White" FontWeight="Bold" VerticalAlignment="Center" FontSize="16"/>
+                <TextBlock Grid.Column="1" Text="{Binding CurrentTrainer.Name, StringFormat='Prijavljeni: {0}'}" Foreground="#94a3b8" VerticalAlignment="Center" Margin="0,0,15,0"/>
+                <Button Grid.Column="2" Content="Odjavi se" Background="#ef4444" Foreground="White" Click="OnLogoutClicked"/>
+            </Grid>
+        </Border>
+
+        <TabControl Grid.Row="1" Margin="10">
+            
+            <TabItem Header="Zahtevi klijenata">
+                <Grid ColumnDefinitions="*,300" Margin="10">
+                    <DockPanel Grid.Column="0">
+                        <Border DockPanel.Dock="Top" Background="#e0e0e0" Padding="8,4" CornerRadius="4,4,0,0">
+                            <Grid ColumnDefinitions="140,160,*">
+                                <TextBlock Grid.Column="0" Text="Datum" FontWeight="Bold"/>
+                                <TextBlock Grid.Column="1" Text="Klijent ID" FontWeight="Bold"/>
+                                <TextBlock Grid.Column="2" Text="Poruka" FontWeight="Bold"/>
+                            </Grid>
+                        </Border>
+                        <ListBox ItemsSource="{Binding PendingRequests}" SelectedItem="{Binding SelectedRequest}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate DataType="models:TrainerRequest">
+                                    <Grid ColumnDefinitions="140,160,*">
+                                        <TextBlock Grid.Column="0" Text="{Binding DateSent}"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding ClientId}"/>
+                                        <TextBlock Grid.Column="2" Text="{Binding Message}" TextTrimming="CharacterEllipsis"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </DockPanel>
+                    
+                    <StackPanel Grid.Column="1" Margin="15,0,0,0" Spacing="10">
+                        <TextBlock Text="Obrada zahteva" FontWeight="Bold" FontSize="16"/>
+                        <TextBlock Text="Odgovor / Razlog:"/>
+                        <TextBox x:Name="RequestResponseNote" AcceptsReturn="True" Height="80"/>
+                        <Button Content="Prihvati zahtev" Background="#2e7d32" Foreground="White" HorizontalAlignment="Stretch" Click="OnAcceptRequestClicked"/>
+                        <Button Content="Odbij zahtev" Background="#c62828" Foreground="White" HorizontalAlignment="Stretch" Click="OnRejectRequestClicked"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Moji klijenti">
+                <Grid ColumnDefinitions="280,*" Margin="10">
+                    <DockPanel Grid.Column="0" Margin="0,0,10,0">
+                        <TextBlock DockPanel.Dock="Top" Text="Moji klijenti" FontWeight="Bold" Margin="0,0,0,8"/>
+                        <ListBox ItemsSource="{Binding MyClients}" SelectedItem="{Binding SelectedClient}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate DataType="models:Client">
+                                    <StackPanel Spacing="2">
+                                        <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
+                                        <TextBlock Text="{Binding Goals}" FontSize="12" Foreground="Gray"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </DockPanel>
+
+                    <Grid Grid.Column="1" RowDefinitions="Auto,*,Auto" Margin="10,0,0,0">
+                        <Border Grid.Row="0" Background="#f0f4f8" Padding="12" CornerRadius="6">
+                            <Grid ColumnDefinitions="*,*">
+                                <StackPanel Grid.Column="0" Spacing="4">
+                                    <TextBlock Text="{Binding SelectedClient.Name}" FontWeight="Bold" FontSize="15"/>
+                                    <TextBlock Text="{Binding SelectedClient.HealthIssues, StringFormat='Zdravstveno stanje: {0}'}"/>
+                                    <TextBlock Text="{Binding SelectedClient.LocationPreference, StringFormat='Lokacija: {0}'}"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Spacing="4">
+                                    <TextBlock Text="{Binding SelectedClient.Goals, StringFormat='Cilj: {0}'}"/>
+                                    <TextBlock Text="{Binding SelectedClient.TrainingsPerWeek, StringFormat='Treninga nedeljno: {0}'}"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <TabControl Grid.Row="1" Margin="0,10,0,10">
+                            <!-- Telesne mere -->
+                            <TabItem Header="Merenja i težina">
+                                <DockPanel>
+                                    <Border DockPanel.Dock="Top" Background="#e0e0e0" Padding="8,4" CornerRadius="4,4,0,0">
+                                        <Grid ColumnDefinitions="100,80,60,60,60,*">
+                                            <TextBlock Grid.Column="0" Text="Datum" FontWeight="Bold"/>
+                                            <TextBlock Grid.Column="1" Text="Težina (kg)" FontWeight="Bold"/>
+                                            <TextBlock Grid.Column="2" Text="Grudi" FontWeight="Bold"/>
+                                            <TextBlock Grid.Column="3" Text="Struk" FontWeight="Bold"/>
+                                            <TextBlock Grid.Column="4" Text="Kukovi" FontWeight="Bold"/>
+                                            <TextBlock Grid.Column="5" Text="Komentar" FontWeight="Bold"/>
+                                        </Grid>
+                                    </Border>
+                                    <ListBox ItemsSource="{Binding SelectedClientProgress}">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate DataType="models:ProgressEntry">
+                                                <Grid ColumnDefinitions="100,80,60,60,60,*">
+                                                    <TextBlock Grid.Column="0" Text="{Binding Date}"/>
+                                                    <TextBlock Grid.Column="1" Text="{Binding Weight}"/>
+                                                    <TextBlock Grid.Column="2" Text="{Binding Chest}"/>
+                                                    <TextBlock Grid.Column="3" Text="{Binding Waist}"/>
+                                                    <TextBlock Grid.Column="4" Text="{Binding Hips}"/>
+                                                    <TextBlock Grid.Column="5" Text="{Binding Comment}"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                </DockPanel>
+                            </TabItem>
+
+                            <!-- Dodeljeni treninzi (Workout CRUD) -->
+                            <TabItem Header="Istorija treninga">
+                                <Grid RowDefinitions="*,Auto">
+                                    <DockPanel Grid.Row="0">
+                                        <Border DockPanel.Dock="Top" Background="#e0e0e0" Padding="8,4" CornerRadius="4,4,0,0">
+                                            <Grid ColumnDefinitions="110,80,60,*">
+                                                <TextBlock Grid.Column="0" Text="Datum" FontWeight="Bold"/>
+                                                <TextBlock Grid.Column="1" Text="Urađen" FontWeight="Bold"/>
+                                                <TextBlock Grid.Column="2" Text="Ocena" FontWeight="Bold"/>
+                                                <TextBlock Grid.Column="3" Text="Komentar klijenta" FontWeight="Bold"/>
+                                            </Grid>
+                                        </Border>
+                                        <ListBox x:Name="ClientSessionsListBox" ItemsSource="{Binding SelectedClientSessions}">
+                                            <ListBox.ItemTemplate>
+                                                <DataTemplate DataType="models:TrainingSession">
+                                                    <Grid ColumnDefinitions="110,80,60,*">
+                                                        <TextBlock Grid.Column="0" Text="{Binding DateCreated}"/>
+                                                        <TextBlock Grid.Column="1" Text="{Binding IsCompleted}"/>
+                                                        <TextBlock Grid.Column="2" Text="{Binding OverallRating}"/>
+                                                        <TextBlock Grid.Column="3" Text="{Binding OverallComment}"/>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ListBox.ItemTemplate>
+                                        </ListBox>
+                                    </DockPanel>
+
+                                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10" Margin="0,5,0,0">
+                                        <Button Content="Obriši izabrani trening" Background="#c62828" Foreground="White" Click="OnDeleteSessionClicked"/>
+                                    </StackPanel>
+                                </Grid>
+                            </TabItem>
+
+                            <TabItem Header="Interna ocena klijenta">
+                                <Grid ColumnDefinitions="*,300" Margin="10">
+                                    <DockPanel Grid.Column="0">
+                                        <TextBlock DockPanel.Dock="Top" Text="Istorija internih beleški trenera:" FontWeight="Bold" Margin="0,0,0,5"/>
+                                        <ListBox ItemsSource="{Binding ClientInternalRatingsHistory}">
+                                            <ListBox.ItemTemplate>
+                                                <DataTemplate DataType="models:ClientInternalRating">
+                                                    <StackPanel Spacing="2" Margin="0,4">
+                                                        <TextBlock Text="{Binding Date, StringFormat='Datum: {0}'}" FontWeight="SemiBold"/>
+                                                        <TextBlock Text="{Binding Rating, StringFormat='Ocena angažovanja: ⭐ {0}'}"/>
+                                                        <TextBlock Text="{Binding Note, StringFormat='Beleška: {0}'}" TextWrapping="Wrap"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ListBox.ItemTemplate>
+                                        </ListBox>
+                                    </DockPanel>
+
+                                    <StackPanel Grid.Column="1" Margin="15,0,0,0" Spacing="8">
+                                        <TextBlock Text="Oceni klijenta (Interno)" FontWeight="Bold"/>
+                                        <TextBlock Text="Ocena zalaganja (1-5):"/>
+                                        <TextBox Text="{Binding CurrentClientInternalRating}"/>
+                                        <TextBlock Text="Zapažanja / disciplina:"/>
+                                        <TextBox Text="{Binding CurrentClientInternalNote}" AcceptsReturn="True" Height="90"/>
+                                        <Button Content="Sačuvaj internu ocenu" Background="#1565c0" Foreground="White" Click="OnSaveInternalRatingClicked"/>
+                                    </StackPanel>
+                                </Grid>
+                            </TabItem>
+                        </TabControl>
+
+                        <Button Grid.Row="2" Content="+ Kreiraj novi trening za klijenta" Background="#1565c0" Foreground="White" 
+                                HorizontalAlignment="Right" Click="OnCreateTrainingSessionClicked"/>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            
+            <TabItem Header="Kalendar treninga">
+                <Grid ColumnDefinitions="350,*" Margin="10">
+                    <StackPanel Grid.Column="0" Spacing="10">
+                        <TextBlock Text="Izaberite datum u kalendaru:" FontWeight="Bold"/>
+                        <Calendar SelectedDate="{Binding SelectedCalendarDate}" HorizontalAlignment="Center"/>
+                    </StackPanel>
+
+                    <DockPanel Grid.Column="1" Margin="15,0,0,0">
+                        <TextBlock DockPanel.Dock="Top" Text="Treninzi zakazani za izabrani datum:" FontWeight="Bold" Margin="0,0,0,8"/>
+                        <Border DockPanel.Dock="Top" Background="#e0e0e0" Padding="8,4" CornerRadius="4,4,0,0">
+                            <Grid ColumnDefinitions="150,140,80,*">
+                                <TextBlock Grid.Column="0" Text="Klijent ID" FontWeight="Bold"/>
+                                <TextBlock Grid.Column="1" Text="Datum i vreme" FontWeight="Bold"/>
+                                <TextBlock Grid.Column="2" Text="Završen" FontWeight="Bold"/>
+                                <TextBlock Grid.Column="3" Text="Br. vežbi" FontWeight="Bold"/>
+                            </Grid>
+                        </Border>
+                        <ListBox ItemsSource="{Binding CalendarSessions}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate DataType="models:TrainingSession">
+                                    <Grid ColumnDefinitions="150,140,80,*">
+                                        <TextBlock Grid.Column="0" Text="{Binding ClientId}"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding DateCreated, StringFormat=\{0:dd.MM.yyyy HH:mm\}}"/>
+                                        <TextBlock Grid.Column="2" Text="{Binding IsCompleted}"/>
+                                        <TextBlock Grid.Column="3" Text="{Binding Items.Count}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </DockPanel>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Baza vežbi">
+                <Grid ColumnDefinitions="*,320" Margin="10">
+                    <DockPanel Grid.Column="0">
+                        <Border DockPanel.Dock="Top" Background="#e0e0e0" Padding="8,4" CornerRadius="4,4,0,0">
+                            <Grid ColumnDefinitions="160,*,150">
+                                <TextBlock Grid.Column="0" Text="Naziv" FontWeight="Bold"/>
+                                <TextBlock Grid.Column="1" Text="Opis" FontWeight="Bold"/>
+                                <TextBlock Grid.Column="2" Text="Video URL" FontWeight="Bold"/>
+                            </Grid>
+                        </Border>
+                        <ListBox ItemsSource="{Binding Exercises}" SelectedItem="{Binding SelectedExercise}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate DataType="models:Exercise">
+                                    <Grid ColumnDefinitions="160,*,150">
+                                        <TextBlock Grid.Column="0" Text="{Binding Name}" FontWeight="SemiBold"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding Description}" TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock Grid.Column="2" Text="{Binding VideoUrl}" Foreground="#1976d2"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </DockPanel>
+
+                    <StackPanel Grid.Column="1" Margin="15,0,0,0" Spacing="8">
+                        <TextBlock Text="Upravljanje vežbom" FontWeight="Bold" FontSize="16"/>
+                        <TextBlock Text="Naziv vežbe:"/>
+                        <TextBox x:Name="ExerciseNameInput"/>
+                        <TextBlock Text="Opis vežbe:"/>
+                        <TextBox x:Name="ExerciseDescInput" AcceptsReturn="True" Height="70"/>
+                        <TextBlock Text="Video URL:"/>
+                        <TextBox x:Name="ExerciseUrlInput"/>
+                        <StackPanel Orientation="Horizontal" Spacing="10" Margin="0,10,0,0">
+                            <Button Content="Dodaj novu" Click="OnAddExerciseClicked"/>
+                            <Button Content="Izmeni" Click="OnUpdateExerciseClicked"/>
+                            <Button Content="Obriši" Background="#c62828" Foreground="White" Click="OnDeleteExerciseClicked"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Sprave i rekviziti">
+                <Grid ColumnDefinitions="*,300" Margin="10">
+                    <DockPanel Grid.Column="0">
+                        <Border DockPanel.Dock="Top" Background="#e0e0e0" Padding="8,4" CornerRadius="4,4,0,0">
+                            <Grid ColumnDefinitions="160,120,*">
+                                <TextBlock Grid.Column="0" Text="Naziv" FontWeight="Bold"/>
+                                <TextBlock Grid.Column="1" Text="Tip" FontWeight="Bold"/>
+                                <TextBlock Grid.Column="2" Text="Opis" FontWeight="Bold"/>
+                            </Grid>
+                        </Border>
+                        <ListBox ItemsSource="{Binding EquipmentList}" SelectedItem="{Binding SelectedEquipment}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate DataType="models:Equipment">
+                                    <Grid ColumnDefinitions="160,120,*">
+                                        <TextBlock Grid.Column="0" Text="{Binding Name}" FontWeight="SemiBold"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding Type}"/>
+                                        <TextBlock Grid.Column="2" Text="{Binding Description}" TextTrimming="CharacterEllipsis"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </DockPanel>
+
+                    <StackPanel Grid.Column="1" Margin="15,0,0,0" Spacing="8">
+                        <TextBlock Text="Rekviziti / Sprave" FontWeight="Bold" FontSize="16"/>
+                        <TextBlock Text="Naziv:"/>
+                        <TextBox x:Name="EqNameInput"/>
+                        <TextBlock Text="Tip (Sprava / Rekvizit):"/>
+                        <TextBox x:Name="EqTypeInput"/>
+                        <TextBlock Text="Opis:"/>
+                        <TextBox x:Name="EqDescInput" AcceptsReturn="True" Height="60"/>
+                        <StackPanel Orientation="Horizontal" Spacing="10" Margin="0,10,0,0">
+                            <Button Content="Dodaj" Click="OnAddEquipmentClicked"/>
+                            <Button Content="Izmeni" Click="OnUpdateEquipmentClicked"/>
+                            <Button Content="Obriši" Background="#c62828" Foreground="White" Click="OnDeleteEquipmentClicked"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Profil i recenzije">
+                <Grid ColumnDefinitions="350,*" Margin="10">
+                    <StackPanel Grid.Column="0" Spacing="8" Margin="0,0,15,0">
+                        <TextBlock Text="Moji podaci" FontWeight="Bold" FontSize="16"/>
+                        <TextBlock Text="Ime:"/>
+                        <TextBox Text="{Binding CurrentTrainer.Name}"/>
+                        <TextBlock Text="Prezime:"/>
+                        <TextBox Text="{Binding CurrentTrainer.LastName}"/>
+                        <TextBlock Text="Mesečna cena:"/>
+                        <TextBox Text="{Binding CurrentTrainer.MonthlyFee}"/>
+                        <TextBlock Text="Cena po treningu:"/>
+                        <TextBox Text="{Binding CurrentTrainer.FeePerSession}"/>
+                        <TextBlock Text="{Binding CurrentTrainer.WarningCount, StringFormat='Broj upozorenja: {0}'}" Foreground="#d32f2f"/>
+                        <Button Content="Sačuvaj izmene profila" Click="OnSaveProfileClicked" Margin="0,10,0,0"/>
+                    </StackPanel>
+
+                    <DockPanel Grid.Column="1">
+                        <TextBlock DockPanel.Dock="Top" Text="Recenzije i ocene klijenata" FontWeight="Bold" Margin="0,0,0,8"/>
+                        <Border DockPanel.Dock="Top" Background="#e0e0e0" Padding="8,4" CornerRadius="4,4,0,0">
+                            <Grid ColumnDefinitions="110,80,*">
+                                <TextBlock Grid.Column="0" Text="Datum" FontWeight="Bold"/>
+                                <TextBlock Grid.Column="1" Text="Ocena" FontWeight="Bold"/>
+                                <TextBlock Grid.Column="2" Text="Komentar" FontWeight="Bold"/>
+                            </Grid>
+                        </Border>
+                        <ListBox ItemsSource="{Binding Reviews}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate DataType="models:Review">
+                                    <Grid ColumnDefinitions="110,80,*">
+                                        <TextBlock Grid.Column="0" Text="{Binding Date}"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding Rating}"/>
+                                        <TextBlock Grid.Column="2" Text="{Binding Comment}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </DockPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
