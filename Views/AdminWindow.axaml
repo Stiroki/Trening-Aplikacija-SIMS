@@ -6,65 +6,114 @@
         x:CompileBindings="False"
         Title="Admin"
         Width="800" Height="600">
-    <StackPanel Margin="20" Spacing="15">
-        <TextBlock Text="{Binding WelcomeMessage}" FontSize="20" FontWeight="Bold" />
+    <ScrollViewer>
+        <StackPanel Margin="20" Spacing="15">
+            <TextBlock Text="{Binding WelcomeMessage}" FontSize="20" FontWeight="Bold" />
 
-        <TextBlock Text="Prijave trenera na čekanju" FontSize="16" Margin="0,10,0,0" />
+            <TextBlock Text="Prijave trenera na čekanju" FontSize="16" Margin="0,10,0,0" />
 
-        <ItemsControl ItemsSource="{Binding PendingTrainers}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Border BorderBrush="Gray" BorderThickness="1" Padding="10" Margin="0,0,0,8">
-                        <Grid ColumnDefinitions="*,Auto,Auto">
-                            <StackPanel Grid.Column="0">
-                                <TextBlock Text="{Binding Name}" FontWeight="Bold" />
-                                <TextBlock Text="{Binding LastName}" />
-                                <TextBlock Text="{Binding Email}" Foreground="Gray" />
-                            </StackPanel>
+            <ItemsControl ItemsSource="{Binding PendingTrainers}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Gray" BorderThickness="1" Padding="10" Margin="0,0,0,8">
+                            <Grid ColumnDefinitions="*,Auto,Auto">
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="{Binding Name}" FontWeight="Bold" />
+                                    <TextBlock Text="{Binding LastName}" />
+                                    <TextBlock Text="{Binding Email}" Foreground="Gray" />
+                                </StackPanel>
 
-                            <Button Grid.Column="1" Content="Prihvati" Margin="10,0"
-                                    Command="{Binding DataContext.ApproveTrainerCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                    CommandParameter="{Binding}"
-                                    Background="Green" Foreground="White" />
+                                <Button Grid.Column="1" Content="Prihvati" Margin="10,0"
+                                        Command="{Binding DataContext.ApproveTrainerCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                        CommandParameter="{Binding}"
+                                        Background="Green" Foreground="White" />
 
-                            <Button Grid.Column="2" Content="Odbij"
-                                    Command="{Binding DataContext.RejectTrainerCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                    CommandParameter="{Binding}"
-                                    Background="Red" Foreground="White" />
-                        </Grid>
-                    </Border>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+                                <Button Grid.Column="2" Content="Odbij"
+                                        Command="{Binding DataContext.RejectTrainerCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                        CommandParameter="{Binding}"
+                                        Background="Red" Foreground="White" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
 
-        <TextBlock Text="Prijave klijenata na čekanju" FontSize="16" Margin="0,20,0,0" />
+            <TextBlock Text="Prijave klijenata na čekanju" FontSize="16" Margin="0,20,0,0" />
 
-        <ItemsControl ItemsSource="{Binding PendingClients}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Border BorderBrush="Gray" BorderThickness="1" Padding="10" Margin="0,0,0,8">
-                        <Grid ColumnDefinitions="*,Auto,Auto">
-                            <StackPanel Grid.Column="0">
-                                <TextBlock Text="{Binding Name}" FontWeight="Bold" />
-                                <TextBlock Text="{Binding LastName}" />
-                                <TextBlock Text="{Binding Email}" Foreground="Gray" />
-                            </StackPanel>
+            <ItemsControl ItemsSource="{Binding PendingClients}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Gray" BorderThickness="1" Padding="10" Margin="0,0,0,8">
+                            <Grid ColumnDefinitions="*,Auto,Auto">
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="{Binding Name}" FontWeight="Bold" />
+                                    <TextBlock Text="{Binding LastName}" />
+                                    <TextBlock Text="{Binding Email}" Foreground="Gray" />
+                                </StackPanel>
 
-                            <Button Grid.Column="1" Content="Prihvati" Margin="10,0"
-                                    Command="{Binding DataContext.ApproveClientCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                    CommandParameter="{Binding}"
-                                    Background="Green" Foreground="White" />
+                                <Button Grid.Column="1" Content="Prihvati" Margin="10,0"
+                                        Command="{Binding DataContext.ApproveClientCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                        CommandParameter="{Binding}"
+                                        Background="Green" Foreground="White" />
 
-                            <Button Grid.Column="2" Content="Odbij"
-                                    Command="{Binding DataContext.RejectClientCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                    CommandParameter="{Binding}"
-                                    Background="Red" Foreground="White" />
-                        </Grid>
-                    </Border>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+                                <Button Grid.Column="2" Content="Odbij"
+                                        Command="{Binding DataContext.RejectClientCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                        CommandParameter="{Binding}"
+                                        Background="Red" Foreground="White" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
 
-        <TextBlock Text="{Binding StatusMessage}" Foreground="Blue" />
-    </StackPanel>
+            <TextBlock Text="Zakasnele uplate" FontSize="16" Margin="0,20,0,0" />
+
+            <ItemsControl ItemsSource="{Binding OverduePayments}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="OrangeRed" BorderThickness="1" Padding="10" Margin="0,0,0,8">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="{Binding Period}" FontWeight="Bold" />
+                                    <TextBlock Text="{Binding Amount, StringFormat='Iznos: {0} RSD'}" />
+                                    <TextBlock Text="{Binding DueDate, StringFormat='Rok: {0:d}'}" Foreground="Gray" />
+                                </StackPanel>
+
+                                <Button Grid.Column="1" Content="Označi kao plaćeno"
+                                        Command="{Binding DataContext.MarkPaymentAsPaidCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                        CommandParameter="{Binding}"
+                                        Background="Green" Foreground="White" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <TextBlock Text="Provizije trenera" FontSize="16" Margin="0,20,0,0" />
+
+            <ItemsControl ItemsSource="{Binding CommissionPayments}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Gray" BorderThickness="1" Padding="10" Margin="0,0,0,8">
+                            <Grid ColumnDefinitions="*,Auto,Auto">
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="{Binding Period}" FontWeight="Bold" />
+                                    <TextBlock Text="{Binding Amount, StringFormat='Iznos: {0} RSD'}" />
+                                </StackPanel>
+
+                                <TextBlock Grid.Column="1" Text="{Binding Status}" VerticalAlignment="Center" Margin="10,0" />
+
+                                <Button Grid.Column="2" Content="Označi kao plaćeno"
+                                        Command="{Binding DataContext.MarkPaymentAsPaidCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                        CommandParameter="{Binding}"
+                                        Background="Green" Foreground="White" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <TextBlock Text="{Binding StatusMessage}" Foreground="Blue" />
+        </StackPanel>
+    </ScrollViewer>
 </Window>
