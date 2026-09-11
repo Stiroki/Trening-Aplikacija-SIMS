@@ -41,7 +41,7 @@ namespace TreningAplikacija.Services
         {
             if (IsEmailTaken(newClient.Email))
             {
-                throw new Exception("Email is already in use."); 
+                throw new Exception("Nalog čeka odobrenje administratora."); 
             }
             
             _clientRepo.Create(newClient);
@@ -51,7 +51,7 @@ namespace TreningAplikacija.Services
         {
             if (IsEmailTaken(newTrainer.Email))
             {
-                throw new Exception("Email is already in use.");
+                throw new Exception("Nalog čeka odobrenje administratora.");
             }
 
             newTrainer.IsVerifiedByAdmin = false;
@@ -74,7 +74,7 @@ namespace TreningAplikacija.Services
             {
                 if (!client.IsVerifiedByAdmin)
                 {
-                    throw new Exception("Account pending admin verification.");
+                    throw new Exception("Nalog čeka odobrenje administratora.");
                 }
 
                 return client;
@@ -87,7 +87,7 @@ namespace TreningAplikacija.Services
             {
                 if (!trainer.IsVerifiedByAdmin)
                 {
-                    throw new Exception("Account pending admin verification.");
+                    throw new Exception("Nalog čeka odobrenje administratora.");
                 }
                 
                 return trainer;
