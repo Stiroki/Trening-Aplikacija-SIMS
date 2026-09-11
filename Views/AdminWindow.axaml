@@ -113,6 +113,35 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
 
+            <TextBlock Text="Treneri (sortirano po oceni)" FontSize="16" Margin="0,20,0,0" />
+
+            <ItemsControl ItemsSource="{Binding AllTrainersByRating}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Gray" BorderThickness="1" Padding="10" Margin="0,0,0,8">
+                            <Grid ColumnDefinitions="*,Auto,Auto,Auto">
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="{Binding Name}" FontWeight="Bold" />
+                                    <TextBlock Text="{Binding LastName}" />
+                                    <TextBlock Text="{Binding AverageRating, StringFormat='Ocena: {0:F1}'}" />
+                                    <TextBlock Text="{Binding WarningCount, StringFormat='Upozorenja: {0}'}" Foreground="OrangeRed" />
+                                </StackPanel>
+
+                                <Button Grid.Column="2" Content="Upozori" Margin="10,0"
+                                        Command="{Binding DataContext.WarnTrainerCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                        CommandParameter="{Binding}"
+                                        Background="Orange" Foreground="White" />
+
+                                <Button Grid.Column="3" Content="Ukloni"
+                                        Command="{Binding DataContext.RemoveTrainerCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                        CommandParameter="{Binding}"
+                                        Background="Red" Foreground="White" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
             <TextBlock Text="{Binding StatusMessage}" Foreground="Blue" />
         </StackPanel>
     </ScrollViewer>

@@ -21,6 +21,7 @@ public partial class AdminViewModel : ViewModelBase
     public ObservableCollection<Client> PendingClients { get; } = new();
     public ObservableCollection<Payment> OverduePayments { get; } = new();
     public ObservableCollection<Payment> CommissionPayments { get; } = new();
+    public ObservableCollection<Trainer> AllTrainersByRating { get; } = new();
 
     public AdminViewModel(Admin admin) : this(admin, new AdminService())
     {
@@ -35,6 +36,7 @@ public partial class AdminViewModel : ViewModelBase
         LoadPendingClients();
         LoadOverduePayments();
         LoadCommissionPayments();
+        LoadTrainersByRating();
     }
 
     private void LoadPendingTrainers()
@@ -70,6 +72,15 @@ public partial class AdminViewModel : ViewModelBase
         foreach (var payment in _adminService.GetCommissionPayments())
         {
             CommissionPayments.Add(payment);
+        }
+    }
+
+    private void LoadTrainersByRating()
+    {
+        AllTrainersByRating.Clear();
+        foreach (var trainer in _adminService.GetTrainersSortedByRating())
+        {
+            AllTrainersByRating.Add(trainer);
         }
     }
 
@@ -124,5 +135,25 @@ public partial class AdminViewModel : ViewModelBase
         OverduePayments.Remove(payment);
         CommissionPayments.Remove(payment);
         StatusMessage = $"Uplata za period {payment.Period} označena kao plaćena.";
+    }
+
+    [RelayCommand]
+    private void WarnTrainer(Trainer trainer)
+    {
+        if (trainer == null) return;
+
+        _adminService.WarnTrainer(trainer.Id, string.Empty);
+        trainer.WarningCount += 1;
+        StatusMessage = $"{trainer.Name} {trainer.LastName} je upozoren ({trainer.WarningCount}. put).";
+    }
+
+    [RelayCommand]
+    private void RemoveTrainer(Trainer trainer)
+    {
+        if (trainer == null) return;
+
+        _adminService.RemoveTrainer(trainer.Id);
+        AllTrainersByRating.Remove(trainer);
+        StatusMessage = $"{trainer.Name} {trainer.LastName} je uklonjen sa platforme.";
     }
 }

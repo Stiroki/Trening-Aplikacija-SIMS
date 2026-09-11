@@ -65,6 +65,22 @@ namespace TreningAplikacija.Services
             _trainerRepo.Delete(trainerId);
         }
 
+        public void WarnTrainer(Guid trainerId, string reason)
+        {
+            var trainer = _trainerRepo.GetById(trainerId);
+            if (trainer == null) throw new Exception("Trainer not found.");
+
+            trainer.WarningCount += 1;
+            _trainerRepo.Update(trainer);
+
+            _notificationService.CreateNotification(
+                trainer.Id,
+                NotificationType.RequestRejected,
+                string.IsNullOrWhiteSpace(reason)
+                    ? "Dobili ste upozorenje od administratora."
+                    : $"Dobili ste upozorenje od administratora. Razlog: {reason}");
+        }
+
         public List<Client> GetPendingClientRegistrations()
         {
             return _clientRepo.GetAll()
