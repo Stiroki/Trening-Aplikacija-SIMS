@@ -1,11 +1,16 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:TreningAplikacija.ViewModels"
+        xmlns:conv="using:TreningAplikacija.Converters"
         x:Class="TreningAplikacija.Views.AdminWindow"
         x:DataType="vm:AdminViewModel"
         x:CompileBindings="False"
         Title="Admin"
         Width="800" Height="600">
+    <Window.Resources>
+        <conv:GuidToTrainerNameConverter x:Key="TrainerNameConverter" />
+        <conv:GuidToClientNameConverter x:Key="ClientNameConverter" />
+    </Window.Resources>
     <ScrollViewer>
         <StackPanel Margin="20" Spacing="15">
             <TextBlock Text="{Binding WelcomeMessage}" FontSize="20" FontWeight="Bold" />
@@ -137,6 +142,30 @@
                                         CommandParameter="{Binding}"
                                         Background="Red" Foreground="White" />
                             </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <TextBlock Text="Sve recenzije" FontSize="16" Margin="0,20,0,0" />
+
+            <ItemsControl ItemsSource="{Binding AllReviews}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Gray" BorderThickness="1" Padding="10" Margin="0,0,0,8">
+                            <StackPanel>
+                                <TextBlock FontWeight="Bold">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} ocenio(la) trenera {1}">
+                                            <Binding Path="ReviewerId" Converter="{StaticResource ClientNameConverter}" ConverterParameter="{Binding $parent[ItemsControl].DataContext}" />
+                                            <Binding Path="RevieweeId" Converter="{StaticResource TrainerNameConverter}" ConverterParameter="{Binding $parent[ItemsControl].DataContext}" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                                <TextBlock Text="{Binding Rating, StringFormat='Ocena: {0}/5'}" />
+                                <TextBlock Text="{Binding Comment}" TextWrapping="Wrap" />
+                                <TextBlock Text="{Binding Date, StringFormat='{}{0:d}'}" Foreground="Gray" FontSize="11" />
+                            </StackPanel>
                         </Border>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

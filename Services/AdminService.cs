@@ -191,5 +191,11 @@ namespace TreningAplikacija.Services
             var trainer = _trainerRepo.GetById(trainerId);
             return trainer != null ? $"{trainer.Name} {trainer.LastName}" : "Nepoznat trener";
         }
+
+        public string GetClientName(Guid clientId)
+        {
+            var client = _clientRepo.GetById(clientId);
+            return client != null ? $"{client.Name} {client.LastName}" : "Nepoznat klijent";
+        }
     }
 }
