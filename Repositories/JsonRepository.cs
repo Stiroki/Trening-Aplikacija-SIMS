@@ -11,24 +11,75 @@ namespace TreningAplikacija.Repositories
     {
         private readonly string _filePath;
         private readonly JsonSerializerOptions _options;
+        private static readonly object _lock = new object();
 
         public JsonRepository(string fileName)
         {
-            _filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
-            _options = new JsonSerializerOptions { WriteIndented = true };
+            string rootDir = GetProjectRootDirectory();
+            string dataDirectory = Path.Combine(rootDir, "Data");
+
+            if (!Directory.Exists(dataDirectory))
+            {
+                Directory.CreateDirectory(dataDirectory);
+            }
+
+            _filePath = Path.Combine(dataDirectory, fileName);
+            _options = new JsonSerializerOptions 
+            { 
+                WriteIndented = true,
+                PropertyNameCaseInsensitive = true
+            };
+        }
+
+        private static string GetProjectRootDirectory()
+        {
+            var currentDir = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
+
+            while (currentDir != null)
+            {
+                if (currentDir.GetFiles("*.csproj").Length > 0 || currentDir.GetFiles("*.sln*").Length > 0)
+                {
+                    return currentDir.FullName;
+                }
+                currentDir = currentDir.Parent;
+            }
+
+            return AppDomain.CurrentDomain.BaseDirectory;
         }
 
         public List<T> GetAll()
         {
-            if (!File.Exists(_filePath)) return new List<T>();
-            string json = File.ReadAllText(_filePath);
-            return JsonSerializer.Deserialize<List<T>>(json, _options) ?? new List<T>();
+            lock (_lock)
+            {
+                if (!File.Exists(_filePath))
+                {
+                    return new List<T>();
+                }
+
+                try
+                {
+                    string json = File.ReadAllText(_filePath);
+                    if (string.IsNullOrWhiteSpace(json))
+                    {
+                        return new List<T>();
+                    }
+
+                    return JsonSerializer.Deserialize<List<T>>(json, _options) ?? new List<T>();
+                }
+                catch
+                {
+                    return new List<T>();
+                }
+            }
         }
 
         public void SaveAll(List<T> entities)
         {
-            string json = JsonSerializer.Serialize(entities, _options);
-            File.WriteAllText(_filePath, json);
+            lock (_lock)
+            {
+                string json = JsonSerializer.Serialize(entities, _options);
+                File.WriteAllText(_filePath, json);
+            }
         }
 
         public void Create(T entity)
