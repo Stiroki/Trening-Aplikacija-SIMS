@@ -1,0 +1,60 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:models="using:TreningAplikacija.Models"
+        x:Class="TreningAplikacija.Views.CreateTrainingWindow"
+        x:CompileBindings="False"
+        Title="Sastavi trening" Width="600" Height="500"
+        WindowStartupLocation="CenterOwner">
+
+    <Grid RowDefinitions="Auto,*,Auto,Auto" Margin="15">
+        <TextBlock Grid.Row="0" Text="Kreiranje novog treninga za klijenta" FontWeight="Bold" FontSize="16" Margin="0,0,0,10"/>
+
+        <!-- Spisak vežbi -->
+        <DockPanel Grid.Row="1">
+            <Border DockPanel.Dock="Top" Background="#e0e0e0" Padding="8,4" CornerRadius="4,4,0,0">
+                <Grid ColumnDefinitions="160,80,90,*">
+                    <TextBlock Grid.Column="0" Text="Vežba ID" FontWeight="Bold"/>
+                    <TextBlock Grid.Column="1" Text="Serije" FontWeight="Bold"/>
+                    <TextBlock Grid.Column="2" Text="Ponavljanja" FontWeight="Bold"/>
+                    <TextBlock Grid.Column="3" Text="Pauza/Trajanje" FontWeight="Bold"/>
+                </Grid>
+            </Border>
+            <ListBox x:Name="ItemsListBox">
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="models:TrainingItem">
+                        <Grid ColumnDefinitions="160,80,90,*">
+                            <TextBlock Grid.Column="0" Text="{Binding ExerciseName}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>                            <TextBlock Grid.Column="1" Text="{Binding Sets}"/>
+                            <TextBlock Grid.Column="2" Text="{Binding Reps}"/>
+                            <TextBlock Grid.Column="3" Text="{Binding Duration}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </DockPanel>
+
+        <!-- Unos pojedinačne vežbe -->
+        <Border Grid.Row="2" Background="#f5f5f5" Padding="10" Margin="0,10,0,10" CornerRadius="4">
+            <Grid ColumnDefinitions="*,Auto,Auto,Auto,Auto" RowDefinitions="Auto,Auto">
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Izaberi vežbu:"/>
+                <ComboBox Grid.Row="1" Grid.Column="0" x:Name="ExerciseComboBox" HorizontalAlignment="Stretch" Margin="0,0,8,0"/>
+
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="Serije:"/>
+                <TextBox Grid.Row="1" Grid.Column="1" x:Name="SetsInput" Text="3" Width="55" Margin="0,0,8,0"/>
+
+                <TextBlock Grid.Row="0" Grid.Column="2" Text="Ponavljanja:"/>
+                <TextBox Grid.Row="1" Grid.Column="2" x:Name="RepsInput" Text="10" Width="80" Margin="0,0,8,0"/>
+
+                <TextBlock Grid.Row="0" Grid.Column="3" Text="Pauza:"/>
+                <TextBox Grid.Row="1" Grid.Column="3" x:Name="DurationInput" Text="60s" Width="70" Margin="0,0,8,0"/>
+
+                <Button Grid.Row="1" Grid.Column="4" Content="Dodaj" Click="OnAddItemClicked"/>
+            </Grid>
+        </Border>
+
+        <!-- Akciona dugmad -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
+            <Button Content="Otkaži" Click="OnCancelClicked"/>
+            <Button Content="Završi i pošalji trening" Background="#2e7d32" Foreground="White" Click="OnSaveSessionClicked"/>
+        </StackPanel>
+    </Grid>
+</Window>
