@@ -22,6 +22,7 @@ public partial class AdminViewModel : ViewModelBase
     public ObservableCollection<Payment> OverduePayments { get; } = new();
     public ObservableCollection<Payment> CommissionPayments { get; } = new();
     public ObservableCollection<Trainer> AllTrainersByRating { get; } = new();
+    public ObservableCollection<Review> AllReviews { get; } = new();
 
     public AdminViewModel(Admin admin) : this(admin, new AdminService())
     {
@@ -37,6 +38,7 @@ public partial class AdminViewModel : ViewModelBase
         LoadOverduePayments();
         LoadCommissionPayments();
         LoadTrainersByRating();
+        LoadAllReviews();
     }
 
     private void LoadPendingTrainers()
@@ -84,7 +86,18 @@ public partial class AdminViewModel : ViewModelBase
         }
     }
 
+    private void LoadAllReviews()
+    {
+        AllReviews.Clear();
+        foreach (var review in _adminService.GetAllReviews())
+        {
+            AllReviews.Add(review);
+        }
+    }
+
     public string GetTrainerName(Guid trainerId) => _adminService.GetTrainerName(trainerId);
+
+    public string GetClientName(Guid clientId) => _adminService.GetClientName(clientId);
 
     [RelayCommand]
     private void ApproveTrainer(Trainer trainer)
