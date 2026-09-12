@@ -89,6 +89,12 @@ public class ClientService
     //Recenzije
     public void ReviewTrainer(Guid clientId, Guid trainerId, int rating, string comment)
     {
+        Review existing = _reviewRepo.GetAll()
+            .FirstOrDefault(r => r.ReviewerId == clientId && r.RevieweeId == trainerId);
+        if (existing != null)
+        {
+            throw new Exception("Ocenili ste ovog trenera.");
+        }
         if (rating < 1 || rating > 5)
         {
             throw new Exception("Ocena mora biti izmedju 1 i 5.");
@@ -111,5 +117,11 @@ public class ClientService
             .Where(r => r.RevieweeId == trainerId)
             .OrderByDescending(r => r.Date)
             .ToList();
+    }
+    
+    public bool HasReviewedTrainer(Guid clientId, Guid trainerId)
+    {
+        return _reviewRepo.GetAll()
+            .Any(r => r.ReviewerId == clientId && r.RevieweeId == trainerId);
     }
 }

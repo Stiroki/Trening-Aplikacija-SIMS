@@ -18,6 +18,12 @@ public partial class TrainerListItem : ObservableObject
 
     [ObservableProperty] 
     private bool _canSendRequest = true;
+    
+    [ObservableProperty] 
+    private bool _canReviewTrainer = false;
+
+    [ObservableProperty] 
+    private bool _alreadyReviewed;
 
     public TrainerListItem(Trainer trainer)
     {
@@ -37,6 +43,7 @@ public partial class TrainersListViewModel : ViewModelBase
 
     public ObservableCollection<TrainerListItem> Trainers { get; } = new();
     public event Action? BackRequested;
+    public event Action<TrainerListItem>? ReviewRequested;
     
     public TrainersListViewModel(Client client) : this(client, new ClientService())
     {
@@ -71,8 +78,13 @@ public partial class TrainersListViewModel : ViewModelBase
                     RequestStatus.Rejected => "Zahtev odbijen - možete ponovo poslati",
                     _ => string.Empty
                 };
-                item.CanSendRequest = existingRequest.Status != RequestStatus.Pending &&
-                                      existingRequest.Status != RequestStatus.Rejected;
+                item.CanSendRequest = existingRequest.Status == RequestStatus.Rejected;
+                item.CanReviewTrainer = existingRequest.Status == RequestStatus.Accepted;
+                if (item.CanReviewTrainer && _clientService.HasReviewedTrainer(_client.Id, trainer.Id))
+                {
+                    item.CanReviewTrainer = false;
+                    item.AlreadyReviewed = true;
+                }
             }
             Trainers.Add(item);
         }
@@ -95,6 +107,18 @@ public partial class TrainersListViewModel : ViewModelBase
         {
             ShowStatus(ex.Message);
         }
+    }
+
+    [RelayCommand]
+    private void ReviewTrainer(TrainerListItem item)
+    {
+        if (item == null) return;
+        ReviewRequested?.Invoke(item);
+    }
+
+    public void RefreshTrainers()
+    {
+        LoadTrainers();
     }
 
     [RelayCommand]

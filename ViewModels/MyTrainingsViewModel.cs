@@ -116,6 +116,11 @@ public partial class MyTrainingsViewModel : ViewModelBase
         RateRequested?.Invoke(item.Session);
     }
 
+    public void RefreshSessions()
+    {
+        LoadSessions();
+    }
+
     [RelayCommand]
     private void Back()
     {

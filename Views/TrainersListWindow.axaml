@@ -39,12 +39,21 @@
                                                IsVisible="{Binding RequestStatusText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
                                 </StackPanel>
 
-                                <Button Grid.Column="1" Content="Pošalji zahtev"
-                                        VerticalAlignment="Center"
-                                        IsEnabled="{Binding CanSendRequest}"
-                                        Command="{Binding DataContext.SendRequestCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                        CommandParameter="{Binding}"
-                                        Background="#007ACC" Foreground="White" Padding="10,6"/>
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="4">
+                                    <Button Content="Pošalji zahtev"
+                                            IsEnabled="{Binding CanSendRequest}"
+                                            Command="{Binding DataContext.SendRequestCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                            CommandParameter="{Binding}"
+                                            Background="#007ACC" Foreground="White" Padding="10,6"/>
+                                    <Button Content="Oceni trenera"
+                                            IsVisible="{Binding CanReviewTrainer}"
+                                            Command="{Binding DataContext.ReviewTrainerCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                            CommandParameter="{Binding}"
+                                            Background="Orange" Foreground="White" Padding="10,6"/>
+                                    <TextBlock Text="Ocenili ste trenera"
+                                               IsVisible="{Binding AlreadyReviewed}"
+                                               Foreground="Green" FontStyle="Italic"/>
+                                </StackPanel>
                             </Grid>
                         </Border>
                     </DataTemplate>

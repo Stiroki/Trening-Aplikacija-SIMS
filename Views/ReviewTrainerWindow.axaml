@@ -1,0 +1,36 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:TreningAplikacija.ViewModels"
+        x:Class="TreningAplikacija.Views.ReviewTrainerWindow"
+        x:DataType="vm:ReviewTrainerViewModel"
+        x:CompileBindings="False"
+        Title="Oceni trenera" Width="400" Height="350"
+        WindowStartupLocation="CenterScreen">
+
+    <StackPanel Margin="20" Spacing="12">
+
+        <TextBlock Text="{Binding TrainerName, StringFormat='Oceni trenera: {0}'}"
+                   FontSize="18" FontWeight="Bold" HorizontalAlignment="Center"/>
+
+        <StackPanel Orientation="Horizontal" Spacing="8">
+            <TextBlock Text="Ocena (1-5):" VerticalAlignment="Center"/>
+            <NumericUpDown Value="{Binding Rating}" Minimum="1" Maximum="5"
+                           Increment="1" Width="100" FormatString="0"/>
+        </StackPanel>
+
+        <TextBox Text="{Binding Comment}" Watermark="Komentar (obavezno)"
+                 Height="100" AcceptsReturn="True" TextWrapping="Wrap"/>
+
+        <TextBlock Text="{Binding StatusMessage}" IsVisible="{Binding IsStatusVisible}"
+                   Foreground="OrangeRed" HorizontalAlignment="Center"/>
+
+        <Button Content="Pošalji ocenu" Command="{Binding SubmitCommand}"
+                HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                Background="#007ACC" Foreground="White" Padding="10,8"/>
+
+        <Button Content="Nazad" Command="{Binding BackCommand}"
+                HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                Background="Transparent"/>
+
+    </StackPanel>
+</Window>

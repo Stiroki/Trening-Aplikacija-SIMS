@@ -15,5 +15,12 @@ namespace TreningAplikacija.Views
         {
             DataContext = new AdminViewModel(admin);
         }
+        
+        private void OnLogoutClicked(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            var loginWindow = new LoginWindow();
+            loginWindow.Show();
+            Close();
+        }
     }
 }

@@ -26,6 +26,11 @@ public partial class MyTrainingsWindow : Window
     private void OnRateRequested(TrainingSession session)
     {
         RateTrainingWindow rateWindow = new RateTrainingWindow(session);
+        rateWindow.Closed += (_, _) =>
+        {
+            var viewModel = (MyTrainingsViewModel)DataContext!;
+            viewModel.RefreshSessions();
+        };
         rateWindow.Show();
     }
 }

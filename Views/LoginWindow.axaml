@@ -4,12 +4,12 @@
         x:Class="TreningAplikacija.Views.LoginWindow"
         x:DataType="vm:LogInViewModel"
         x:CompileBindings="False"
-        Title="Prijava na Sistem" Width="400" Height="450"
+        Title="Prijava" Width="400" Height="450"
         WindowStartupLocation="CenterScreen">
 
     <StackPanel Margin="30" Spacing="15" VerticalAlignment="Center">
 
-        <TextBlock Text="Dobrodošli" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+        <TextBlock Text="Dobrodošli" FontSize="24" FontWeight="Bold"  HorizontalAlignment="Center" Margin="0,0,0,20"/>
 
         <TextBlock Text="Email adresa:" />
         <TextBox Text="{Binding Email}" Watermark="Unesite email..." />

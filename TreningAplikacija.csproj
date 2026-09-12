@@ -24,5 +24,11 @@
     <Compile Update="Views\ClientMainWindow.axaml.cs">
       <DependentUpon>ClientMainWindow.axaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\TrainerMainWindow.axaml.cs">
+      <DependentUpon>TrainerMainWindow.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\CreateTrainingWindow.axaml.cs">
+      <DependentUpon>CreateTrainingWindow.axaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

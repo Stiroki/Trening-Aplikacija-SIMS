@@ -172,6 +172,9 @@
             </ItemsControl>
 
             <TextBlock Text="{Binding StatusMessage}" Foreground="Blue" />
+            <Button Content="Odjavi se" Click="OnLogoutClicked"
+                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                    Background="Transparent" Margin="0,15,0,0"/>
         </StackPanel>
     </ScrollViewer>
 </Window>
