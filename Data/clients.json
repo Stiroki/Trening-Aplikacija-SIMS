@@ -1,0 +1,19 @@
+[
+  {
+    "Height": 12,
+    "Weight": 9,
+    "HealthIssues": "",
+    "Goals": "",
+    "LocationPreference": "",
+    "TrainingsPerWeek": 0,
+    "OwnedEquipmentIds": [],
+    "IsVerifiedByAdmin": false,
+    "Id": "35c2098b-cdc3-4efe-b754-d5c55d1a1df3",
+    "Name": "test",
+    "LastName": "user",
+    "Email": "testmail1@gmail.com",
+    "Password": "test1",
+    "DateOfBirth": "2026-09-14T00:00:00",
+    "Gender": "\u017Denski"
+  }
+]

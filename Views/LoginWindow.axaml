@@ -4,7 +4,7 @@
         x:Class="TreningAplikacija.Views.LoginWindow"
         x:DataType="vm:LogInViewModel"
         x:CompileBindings="False"
-        Title="Prijava" Width="400" Height="450"
+        Title="Prijava" Width="400" Height="500"
         WindowStartupLocation="CenterScreen">
 
     <StackPanel Margin="30" Spacing="15" VerticalAlignment="Center">
@@ -24,5 +24,8 @@
 
         <Button Content="Nemate nalog? Registrujte se" Command="{Binding RegisterCommand}"
                 HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Background="Transparent"/>
+        
+        <Button Content="Nastavi kao gost" Command="{Binding GuestLoginCommand}"
+                HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Background="Transparent" Foreground="Gray"/>
     </StackPanel>
 </Window>

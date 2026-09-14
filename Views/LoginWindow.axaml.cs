@@ -13,6 +13,7 @@ namespace TreningAplikacija.Views
             var viewModel = new LogInViewModel();
             viewModel.LoginSucceeded += OnLoginSucceeded;
             viewModel.RegisterRequested += OnRegisterRequested;
+            viewModel.GuestLoginRequested += OnGuestLoginRequested; 
 
             DataContext = viewModel;
         }
@@ -42,6 +43,13 @@ namespace TreningAplikacija.Views
         {
             RegisterChoiceWindow registerWindow = new RegisterChoiceWindow();
             registerWindow.Show();
+            Close();
+        }
+
+        private void OnGuestLoginRequested()
+        {
+            UnregisteredMainWindow guestWindow = new UnregisteredMainWindow();
+            guestWindow.Show();
             Close();
         }
     }

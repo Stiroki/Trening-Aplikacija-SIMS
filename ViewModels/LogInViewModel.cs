@@ -4,7 +4,6 @@ using TreningAplikacija.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
-
 namespace TreningAplikacija.ViewModels;
 
 public partial class LogInViewModel : ViewModelBase
@@ -22,11 +21,9 @@ public partial class LogInViewModel : ViewModelBase
 
     [ObservableProperty]
     private bool _isErrorVisible;
-
-    // View se prijavljuje na ove evente da bi otvorio novi prozor / zatvorio ovaj.
-    // ViewModel namerno ne zna ništa o prozorima (Window) - to je posao View-a.
     public event Action<User>? LoginSucceeded;
     public event Action? RegisterRequested;
+    public event Action? GuestLoginRequested;
 
     public LogInViewModel() : this(new AuthService())
     {
@@ -71,6 +68,12 @@ public partial class LogInViewModel : ViewModelBase
     private void Register()
     {
         RegisterRequested?.Invoke();
+    }
+
+    [RelayCommand]
+    private void GuestLogin()
+    {
+        GuestLoginRequested?.Invoke();
     }
 
     private void ShowError(string message)
