@@ -21,6 +21,8 @@ public partial class ClientMainWindow : Window
         _viewModel.NavigateToTrainers += OnNavigateToTrainers;
         _viewModel.NavigateToMyTrainings += OnNavigateToMyTrainings;
         _viewModel.LogoutRequested += OnLogoutRequested;
+        _viewModel.NavigateToNotifications += OnNavigateToNotifications;
+        _viewModel.NavigateToProgress += OnNavigateToProgress;
 
         DataContext = _viewModel;
     }
@@ -41,6 +43,18 @@ public partial class ClientMainWindow : Window
     {
         MyTrainingsWindow trainingsWindow = new MyTrainingsWindow(_viewModel.Client);
         trainingsWindow.Show();
+    }
+    
+    private void OnNavigateToProgress()
+    {
+        ProgressWindow progressWindow = new ProgressWindow(_viewModel.Client.Id);
+        progressWindow.Show();
+    }
+
+    private void OnNavigateToNotifications()
+    {
+        NotificationsWindow notificationsWindow = new NotificationsWindow(_viewModel.Client.Id);
+        notificationsWindow.Show();
     }
 
     private void OnLogoutRequested()

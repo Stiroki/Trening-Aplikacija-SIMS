@@ -78,7 +78,7 @@ namespace TreningAplikacija.Views
                 }).ToList()
             };
 
-            _trainingService.AssignTrainingSession(session);
+            _trainerService.CreateTrainingSession(session);
             Close();
         }
 

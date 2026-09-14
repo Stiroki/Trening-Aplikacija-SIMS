@@ -18,6 +18,9 @@ public partial class TrainerListItem : ObservableObject
 
     [ObservableProperty] 
     private bool _canSendRequest = true;
+
+    [ObservableProperty] 
+    private bool _needsPreferences;
     
     [ObservableProperty] 
     private bool _canReviewTrainer = false;
@@ -25,6 +28,7 @@ public partial class TrainerListItem : ObservableObject
     [ObservableProperty] 
     private bool _alreadyReviewed;
 
+    public TrainerRequest? Request { get; set; }
     public TrainerListItem(Trainer trainer)
     {
         Trainer = trainer;
@@ -44,6 +48,7 @@ public partial class TrainersListViewModel : ViewModelBase
     public ObservableCollection<TrainerListItem> Trainers { get; } = new();
     public event Action? BackRequested;
     public event Action<TrainerListItem>? ReviewRequested;
+    public event Action<TrainerListItem>? SetPreferencesRequested;
     
     public TrainersListViewModel(Client client) : this(client, new ClientService())
     {
@@ -85,6 +90,12 @@ public partial class TrainersListViewModel : ViewModelBase
                     item.CanReviewTrainer = false;
                     item.AlreadyReviewed = true;
                 }
+
+                if (existingRequest.Status == RequestStatus.Accepted && !existingRequest.PreferencesSet)
+                {
+                    item.NeedsPreferences = true;
+                    item.Request = existingRequest;
+                }
             }
             Trainers.Add(item);
         }
@@ -119,6 +130,13 @@ public partial class TrainersListViewModel : ViewModelBase
     public void RefreshTrainers()
     {
         LoadTrainers();
+    }
+
+    [RelayCommand]
+    private void SetPreferences(TrainerListItem item)
+    {
+        if (item == null) return;
+        SetPreferencesRequested?.Invoke(item);
     }
 
     [RelayCommand]

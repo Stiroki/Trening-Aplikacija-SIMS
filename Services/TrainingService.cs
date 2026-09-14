@@ -10,11 +10,13 @@ namespace TreningAplikacija.Services
     {
         private readonly JsonRepository<Exercise> _exerciseRepo;
         private readonly JsonRepository<TrainingSession> _sessionRepo;
+        private readonly NotificationService _notificationService;
 
         public TrainingService()
         {
             _exerciseRepo = new JsonRepository<Exercise>("exercises.json");
             _sessionRepo = new JsonRepository<TrainingSession>("training_sessions.json");
+            _notificationService = new NotificationService();
         }
         
         public void CreateExercise(Exercise exercise)
@@ -56,6 +58,7 @@ namespace TreningAplikacija.Services
             item.ClientComment = comment;
 
             _sessionRepo.Update(session);
+            _notificationService.CreateNotification(session.TrainerId, NotificationType.NewTraining, $"Klijent je završio i ocenio trening({session.OverallRating}/5");
         }
 
         public void CompleteAndRateSession(Guid sessionId, int overallRating, string overallComment)

@@ -14,6 +14,8 @@ public partial class ClientMainViewModel : ViewModelBase
     public event Action? NavigateToTrainers;
     public event Action? NavigateToMyTrainings;
     public event Action? LogoutRequested;
+    public event Action? NavigateToNotifications;
+    public event Action? NavigateToProgress;
 
     public ClientMainViewModel(Client client)
     {
@@ -21,14 +23,23 @@ public partial class ClientMainViewModel : ViewModelBase
     }
     
     [RelayCommand]
-    private void OpenProfile() => NavigateToProfile.Invoke();
+    private void OpenProfile() => NavigateToProfile?.Invoke();
     
     [RelayCommand]
-    private void OpenTrainers() => NavigateToTrainers.Invoke();
+    private void OpenTrainers() => NavigateToTrainers?.Invoke();
     
     [RelayCommand]
-    private void OpenMyTrainings() => NavigateToMyTrainings.Invoke();
+    private void OpenMyTrainings() => NavigateToMyTrainings?.Invoke();
     
     [RelayCommand]
-    private void Logout() => LogoutRequested.Invoke();
+    private void Logout() => LogoutRequested?.Invoke();
+
+    [RelayCommand]
+    private void OpenNotifications() => NavigateToNotifications?.Invoke();
+
+    [RelayCommand]
+    private void OpenProgress()
+    {
+        NavigateToProgress?.Invoke();
+    }
 }

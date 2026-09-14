@@ -18,4 +18,8 @@ public class TrainerRequest : IIdentifiable
     public RequestStatus Status { get; set; } = RequestStatus.Pending;
     public string Message { get; set; } = string.Empty;
     public string ResponseMessage { get; set; } = string.Empty;
+    public string LocationPreference { get; set; } = string.Empty;
+    public int TrainingsPerWeek { get; set; }
+    public string OwnedEquipment { get; set; } = string.Empty;
+    public bool PreferencesSet { get; set; } = false;
 }

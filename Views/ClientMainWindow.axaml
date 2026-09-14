@@ -19,6 +19,12 @@
 
         <Button Content="Moji treninzi" Command="{Binding OpenMyTrainingsCommand}"
                 HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Padding="12" FontSize="16"/>
+        
+        <Button Content="Moj napredak" Command="{Binding OpenProgressCommand}"
+                HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Padding="12" FontSize="16"/>
+        
+        <Button Content="Notifikacije" Command="{Binding OpenNotificationsCommand}"
+                HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Padding="12" FontSize="16"/>
 
         <Button Content="Odjava" Command="{Binding LogoutCommand}"
                 HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Padding="12" FontSize="16"

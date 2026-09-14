@@ -16,6 +16,7 @@ public partial class TrainersListWindow : Window
         TrainersListViewModel viewModel = new TrainersListViewModel(client);
         viewModel.BackRequested += OnBackRequested;
         viewModel.ReviewRequested += OnReviewRequested;
+        viewModel.SetPreferencesRequested += OnSetPreferencesRequested;
         _client = client;
 
         DataContext = viewModel;
@@ -31,6 +32,19 @@ public partial class TrainersListWindow : Window
         };
         reviewWindow.Show();
     }
+
+    private void OnSetPreferencesRequested(TrainerListItem item)
+    {
+        var trainerName = $"{item.Trainer.Name} {item.Trainer.LastName}";
+        var preferencesWindow = new SetPreferencesWindow(item.Request!, trainerName);
+        preferencesWindow.Closed += (_, _) =>
+        {
+            var viewModel = (TrainersListViewModel)DataContext!;
+            viewModel.RefreshTrainers();
+        };
+        preferencesWindow.Show();
+    }
+    
     private void OnBackRequested()
     {
         Close();

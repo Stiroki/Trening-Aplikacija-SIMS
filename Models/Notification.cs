@@ -8,7 +8,9 @@ public enum NotificationType
     RequestRejected,
     NewTraining,
     PaymentRequired,
-    GoalReached
+    GoalReached,
+    NewRequest,
+    NewReview,
 }
 public class Notification : IIdentifiable
 {

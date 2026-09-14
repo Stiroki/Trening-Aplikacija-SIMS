@@ -53,6 +53,11 @@
                                     <TextBlock Text="Ocenili ste trenera"
                                                IsVisible="{Binding AlreadyReviewed}"
                                                Foreground="Green" FontStyle="Italic"/>
+                                    <Button Content="Postavi preference"
+                                            IsVisible="{Binding NeedsPreferences}"
+                                            Command="{Binding DataContext.SetPreferencesCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                            CommandParameter="{Binding}"
+                                            Background="Green" Foreground="White" Padding="10,6"/>
                                 </StackPanel>
                             </Grid>
                         </Border>

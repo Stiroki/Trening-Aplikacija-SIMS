@@ -1,0 +1,41 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:TreningAplikacija.ViewModels"
+        x:Class="TreningAplikacija.Views.SetPreferencesWindow"
+        x:DataType="vm:SetPreferencesViewModel"
+        x:CompileBindings="False"
+        Title="Preference treninga" Width="400" Height="400"
+        WindowStartupLocation="CenterScreen">
+
+    <StackPanel Margin="20" Spacing="12">
+
+        <TextBlock Text="{Binding TrainerName, StringFormat='Preference za trenera: {0}'}"
+                   FontSize="18" FontWeight="Bold" HorizontalAlignment="Center"
+                   Margin="0,0,0,10"/>
+
+        <TextBlock Text="Lokacija treninga:"/>
+        <ComboBox ItemsSource="{Binding LocationOptions}"
+                  SelectedIndex="{Binding LocationIndex}"
+                  HorizontalAlignment="Stretch"/>
+
+        <TextBlock Text="Broj treninga nedeljno:"/>
+        <NumericUpDown Value="{Binding TrainingsPerWeek}" Minimum="1" Maximum="7"
+                       Increment="1" FormatString="0" HorizontalAlignment="Stretch"/>
+
+        <TextBlock Text="Rekviziti koje imate kod kuće:"/>
+        <TextBox Text="{Binding OwnedEquipment}" Watermark="npr. tegovi, trake, klupa..."
+                 Height="60" AcceptsReturn="True" TextWrapping="Wrap"/>
+
+        <TextBlock Text="{Binding StatusMessage}" IsVisible="{Binding IsStatusVisible}"
+                   Foreground="OrangeRed" HorizontalAlignment="Center"/>
+
+        <Button Content="Sačuvaj" Command="{Binding SaveCommand}"
+                HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                Background="#007ACC" Foreground="White" Padding="10,8"/>
+
+        <Button Content="Nazad" Command="{Binding BackCommand}"
+                HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                Background="Transparent"/>
+
+    </StackPanel>
+</Window>

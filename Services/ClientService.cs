@@ -13,6 +13,7 @@ public class ClientService
     private readonly JsonRepository<TrainerRequest> _requestRepo;
     private readonly JsonRepository<Review> _reviewRepo;
     private readonly JsonRepository<ProgressEntry> _progressRepo;
+    private readonly NotificationService _notificationService;
 
     public ClientService()
     {
@@ -21,6 +22,7 @@ public class ClientService
         _requestRepo = new JsonRepository<TrainerRequest>("trainer_requests.json");
         _reviewRepo = new JsonRepository<Review>("reviews.json");
         _progressRepo = new JsonRepository<ProgressEntry>("progress_entries.json");
+        _notificationService = new NotificationService();
     }
 
     // Profil
@@ -62,6 +64,8 @@ public class ClientService
         };
         
         _requestRepo.Create(request);
+        
+        _notificationService.CreateNotification(trainerId, NotificationType.NewRequest, "Imate novi zahtev za saradnju.");
     }
 
     public List<TrainerRequest> GetMyRequests(Guid clientId)
@@ -109,6 +113,7 @@ public class ClientService
         };
         
         _reviewRepo.Create(review);
+        _notificationService.CreateNotification(trainerId, NotificationType.NewReview, $"Klijent vam je ostavio recenziju({rating}/5).");
     }
 
     public List<Review> GetTrainerReviews(Guid trainerId)
@@ -123,5 +128,10 @@ public class ClientService
     {
         return _reviewRepo.GetAll()
             .Any(r => r.ReviewerId == clientId && r.RevieweeId == trainerId);
+    }
+
+    public void UpdateRequest(TrainerRequest request)
+    {
+        _requestRepo.Update(request);
     }
 }
