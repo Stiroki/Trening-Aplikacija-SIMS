@@ -77,6 +77,14 @@ namespace TreningAplikacija.Repositories
         {
             lock (_lock)
             {
+                // Edge case fix: Ensure directory exists right before saving 
+                // in case it was deleted during runtime
+                string? dir = Path.GetDirectoryName(_filePath);
+                if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
+                {
+                    Directory.CreateDirectory(dir);
+                }
+
                 string json = JsonSerializer.Serialize(entities, _options);
                 File.WriteAllText(_filePath, json);
             }
