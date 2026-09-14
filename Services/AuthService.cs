@@ -41,7 +41,8 @@ namespace TreningAplikacija.Services
         {
             if (IsEmailTaken(newClient.Email))
             {
-                throw new Exception("Nalog čeka odobrenje administratora."); 
+                // Ispravljena poruka o grešci
+                throw new Exception("Korisnik sa ovim email-om već postoji."); 
             }
             
             _clientRepo.Create(newClient);
@@ -51,7 +52,8 @@ namespace TreningAplikacija.Services
         {
             if (IsEmailTaken(newTrainer.Email))
             {
-                throw new Exception("Nalog čeka odobrenje administratora.");
+                // Ispravljena poruka o grešci
+                throw new Exception("Korisnik sa ovim email-om već postoji.");
             }
 
             newTrainer.IsVerifiedByAdmin = false;
