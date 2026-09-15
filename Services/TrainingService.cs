@@ -58,7 +58,6 @@ namespace TreningAplikacija.Services
             item.ClientComment = comment;
 
             _sessionRepo.Update(session);
-            _notificationService.CreateNotification(session.TrainerId, NotificationType.NewTraining, $"Klijent je završio i ocenio trening({session.OverallRating}/5");
         }
 
         public void CompleteAndRateSession(Guid sessionId, int overallRating, string overallComment)
@@ -71,6 +70,7 @@ namespace TreningAplikacija.Services
             session.OverallComment = overallComment;
 
             _sessionRepo.Update(session);
+            _notificationService.CreateNotification(session.TrainerId, NotificationType.NewTraining, $"Klijent je završio i ocenio trening({session.OverallRating}/5)");
         }
 
         public Exercise? GetExerciseById(Guid exerciseId)

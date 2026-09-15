@@ -35,7 +35,7 @@ public partial class RateTrainingViewModel : ViewModelBase
 
     public ObservableCollection<RateExerciseItem> Exercises { get; } = new();
 
-    public string HeaderText => $"Trening - {_session.DateCreated:dd.Mm.yyyy}";
+    public string HeaderText => $"Trening - {_session.DateCreated:dd.MM.yyyy}";
 
     [ObservableProperty]
     private decimal _overallRating = 5;

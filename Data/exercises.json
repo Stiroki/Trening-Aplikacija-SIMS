@@ -1,2 +1,23 @@
-{
-}
+[
+  {
+    "Id": "c1111111-1111-1111-1111-111111111111",
+    "TrainerId": "a1111111-1111-1111-1111-111111111111",
+    "Name": "Čučanj sa šipkom",
+    "Description": "Osnovna vežba za noge i gluteuse sa olimpijskom šipkom.",
+    "VideoUrl": ""
+  },
+  {
+    "Id": "c2222222-2222-2222-2222-222222222222",
+    "TrainerId": "a1111111-1111-1111-1111-111111111111",
+    "Name": "Bench press",
+    "Description": "Potisak sa klupe za grudi, ramena i tricepse.",
+    "VideoUrl": ""
+  },
+  {
+    "Id": "c3333333-3333-3333-3333-333333333333",
+    "TrainerId": "a1111111-1111-1111-1111-111111111111",
+    "Name": "Mrtvo dizanje",
+    "Description": "Kompozitna vežba za leđa, noge i core stabilizaciju.",
+    "VideoUrl": ""
+  }
+]

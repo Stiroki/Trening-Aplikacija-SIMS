@@ -30,5 +30,8 @@
     <Compile Update="Views\CreateTrainingWindow.axaml.cs">
       <DependentUpon>CreateTrainingWindow.axaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\UnregisteredMainWindow.axaml.cs">
+      <DependentUpon>UnregisteredMainWindow.axaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>
