@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "e1111111-1111-1111-1111-111111111111",
+    "Name": "Olimpijska šipka i tegovi",
+    "Type": "Rekvizit",
+    "Description": "Šipka 20kg sa setom bumper ploča za benč i čučanj."
+  },
+  {
+    "Id": "e2222222-2222-2222-2222-222222222222",
+    "Name": "Bučice (Podesivi set)",
+    "Type": "Rekvizit",
+    "Description": "Podesive bučice u rasponu od 2.5kg do 24kg."
+  },
+  {
+    "Id": "e3333333-3333-3333-3333-333333333333",
+    "Name": "Lat mašina",
+    "Type": "Sprava",
+    "Description": "Sprava sa sajlom za povlačenje odozgo i veslanje u sedu."
+  },
+  {
+    "Id": "e4444444-4444-4444-4444-444444444444",
+    "Name": "Elastične trake (Resistance Bands)",
+    "Type": "Rekvizit",
+    "Description": "Set guma različitih otpora za vežbe kod kuće i zagrevanje."
+  }
+]

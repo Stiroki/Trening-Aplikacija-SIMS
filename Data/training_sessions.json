@@ -1,0 +1,56 @@
+[
+  {
+    "Id": "f1111111-1111-1111-1111-111111111111",
+    "ClientId": "b1111111-1111-1111-1111-111111111111",
+    "TrainerId": "a1111111-1111-1111-1111-111111111111",
+    "DateCreated": "2026-09-10T18:00:00",
+    "IsCompleted": true,
+    "Items": [
+      {
+        "ExerciseId": "c1111111-1111-1111-1111-111111111111",
+        "Sets": 4,
+        "Reps": 8,
+        "Duration": "90s",
+        "Rating": 5,
+        "ClientComment": "Odličan osećaj u nogama, tehnika čista."
+      },
+      {
+        "ExerciseId": "c2222222-2222-2222-2222-222222222222",
+        "Sets": 3,
+        "Reps": 10,
+        "Duration": "60s",
+        "Rating": 4,
+        "ClientComment": "Malo jači zamor u trećoj seriji."
+      }
+    ],
+    "OverallRating": 5,
+    "OverallComment": "Odličan i intenzivan trening, sve serije završene po planu."
+  },
+  {
+    "Id": "f2222222-2222-2222-2222-222222222222",
+    "ClientId": "b1111111-1111-1111-1111-111111111111",
+    "TrainerId": "a1111111-1111-1111-1111-111111111111",
+    "DateCreated": "2026-09-15T09:00:00",
+    "IsCompleted": false,
+    "Items": [
+      {
+        "ExerciseId": "c3333333-3333-3333-3333-333333333333",
+        "Sets": 4,
+        "Reps": 12,
+        "Duration": "60s",
+        "Rating": null,
+        "ClientComment": null
+      },
+      {
+        "ExerciseId": "c2222222-2222-2222-2222-222222222222",
+        "Sets": 3,
+        "Reps": 12,
+        "Duration": "60s",
+        "Rating": null,
+        "ClientComment": null
+      }
+    ],
+    "OverallRating": null,
+    "OverallComment": ""
+  }
+]
