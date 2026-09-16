@@ -158,6 +158,8 @@ public partial class AdminViewModel : ViewModelBase
         _adminService.WarnTrainer(trainer.Id, string.Empty);
         trainer.WarningCount += 1;
         StatusMessage = $"{trainer.Name} {trainer.LastName} je upozoren ({trainer.WarningCount}. put).";
+
+        LoadTrainersByRating();
     }
 
     [RelayCommand]
